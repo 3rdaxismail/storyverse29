@@ -1,0 +1,19 @@
+{
+  "file": "Preview",
+  "dashboard": {
+    "name": "Dashboard",
+    "id": "5:51",
+    "page": "Page 1",
+    "bounds": {
+      "x": -404,
+      "y": 0,
+      "width": 412,
+      "height": 917
+    }
+  },
+  "metadata": {
+    "lastModified": "2025-12-28T19:37:09Z",
+    "version": "2302655616303355866",
+    "exportedAt": "2025-12-28T19:55:43.784Z"
+  }
+}

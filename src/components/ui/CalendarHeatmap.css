@@ -1,0 +1,92 @@
+/* Calendar Heatmap Styles - From Figma */
+
+:root {
+  --heatmap-empty: rgb(76, 76, 84);
+  --heatmap-low: rgb(165, 183, 133);
+  --heatmap-medium: rgb(255, 255, 255);
+  --heatmap-text: rgb(140, 139, 148);
+}
+
+.heatmap-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.month-labels {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  padding: 0 8px;
+}
+
+.month-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--heatmap-text);
+  font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-align: center;
+  flex: 1;
+}
+
+.heatmap-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.heatmap-week {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.heatmap-day {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Activity intensity levels */
+.heatmap-day.activity-0 {
+  background-color: var(--heatmap-empty);
+  opacity: 0.3;
+}
+
+.heatmap-day.activity-1 {
+  background-color: var(--heatmap-low);
+  opacity: 0.7;
+}
+
+.heatmap-day.activity-2 {
+  background-color: var(--heatmap-medium);
+  opacity: 1;
+}
+
+.heatmap-day:hover {
+  transform: scale(1.4);
+  opacity: 1;
+  box-shadow: 0 0 6px rgba(165, 183, 133, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .heatmap-day {
+    width: 5px;
+    height: 5px;
+  }
+
+  .month-label {
+    font-size: 10px;
+  }
+
+  .heatmap-grid {
+    gap: 4px;
+  }
+
+  .heatmap-week {
+    gap: 2px;
+  }
+}

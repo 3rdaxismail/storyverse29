@@ -1,0 +1,12 @@
+<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+  <!-- Notepad Icon -->
+  <defs>
+    <style>
+      .notepad-path { fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect x="3" y="2" width="14" height="16" rx="1" class="notepad-path" />
+  <line x1="6" y1="5" x2="14" y2="5" class="notepad-path" />
+  <line x1="6" y1="9" x2="14" y2="9" class="notepad-path" />
+  <line x1="6" y1="13" x2="11" y2="13" class="notepad-path" />
+</svg>

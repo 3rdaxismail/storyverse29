@@ -1,0 +1,253 @@
+/* Header from Figma - group-header-actions */
+
+.groupHeaderActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 20px;
+  background: solid(#0d0d0f);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 12px;
+}
+
+/* Logo Section (Left) */
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.logoStoryverse {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.brandInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brandName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #eaeaea;
+  line-height: 1;
+}
+
+.brandTagline {
+  font-size: 11px;
+  color: rgba(234, 234, 234, 0.6);
+  line-height: 1;
+}
+
+/* Spacer */
+.spacer {
+  flex: 1;
+}
+
+/* Right Actions Section */
+.actionsSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Inbox Button */
+.btnInboxIcon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  cursor: pointer;
+  color: #eaeaea;
+  transition: all 0.2s ease;
+}
+
+.btnInboxIcon:hover {
+  border-color: #9dbb7d;
+  background: rgba(157, 187, 125, 0.08);
+}
+
+.btnInboxIcon:active {
+  background: rgba(157, 187, 125, 0.15);
+}
+
+.btnInboxIcon svg,
+.inboxIconImg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Unread Badge Indicator */
+.indicatorUnreadInbox {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 50%;
+  border: 2px solid #0d0d0f;
+}
+
+/* Profile Section */
+.profileContainer {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.borderProfile {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(157, 187, 125, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.profileContainer:hover .borderProfile {
+  border-color: #9dbb7d;
+  box-shadow: 0 0 12px rgba(157, 187, 125, 0.2);
+}
+
+.imgProfileUser {
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #666 0%, #444 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+}
+
+/* Profile Dropdown Menu */
+.profileMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #1a1a1c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1000;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  color: #eaeaea;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.menuItem:hover {
+  background: rgba(157, 187, 125, 0.1);
+  color: #9dbb7d;
+}
+
+.menuItem.logout {
+  color: #ff6b6b;
+}
+
+.menuItem.logout:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff8888;
+}
+
+.menuDivider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .groupHeaderActions {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .brandInfo {
+    display: none;
+  }
+
+  .logoStoryverse {
+    width: 32px;
+    height: 32px;
+  }
+
+  .borderProfile {
+    width: 36px;
+    height: 36px;
+  }
+
+  .imgProfileUser {
+    width: 26px;
+    height: 26px;
+  }
+
+  .btnInboxIcon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .groupHeaderActions {
+    padding: 0 12px;
+  }
+
+  .actionsSection {
+    gap: 8px;
+  }
+}

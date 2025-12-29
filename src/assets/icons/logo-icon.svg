@@ -1,0 +1,16 @@
+<svg width="22.244" height="29.408" viewBox="0 0 22.244 29.408" xmlns="http://www.w3.org/2000/svg">
+  <!-- Storyverse Logo Icon Placeholder -->
+  <defs>
+    <style>
+      .logo-path { fill: #ffffff; stroke: #a5b785; stroke-width: 1.5; }
+    </style>
+  </defs>
+  <g>
+    <!-- Book/Pages shape -->
+    <path class="logo-path" d="M 2 2 L 2 27.408 L 20.244 27.408 L 20.244 2 Z M 4 4 L 18.244 4 L 18.244 25.408 L 4 25.408 Z" />
+    <!-- Accent lines -->
+    <line x1="6" y1="8" x2="16.244" y2="8" stroke="#a5b785" stroke-width="1" />
+    <line x1="6" y1="12" x2="16.244" y2="12" stroke="#a5b785" stroke-width="1" />
+    <line x1="6" y1="16" x2="12" y2="16" stroke="#a5b785" stroke-width="1" />
+  </g>
+</svg>

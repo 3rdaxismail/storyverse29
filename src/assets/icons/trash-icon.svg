@@ -1,0 +1,13 @@
+<svg width="12" height="14" viewBox="0 0 12 14" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trash Icon -->
+  <defs>
+    <style>
+      .trash-path { fill: none; stroke: #6b7280; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <line x1="0.5" y1="1" x2="11.5" y2="1" class="trash-path" />
+  <path d="M 8 1 L 8 0 Q 8 0 7.5 0 L 4.5 0 Q 4 0 4 1 L 4 1" class="trash-path" />
+  <rect x="1" y="2" width="10" height="10" rx="0.5" class="trash-path" />
+  <line x1="5" y1="5" x2="5" y2="10" class="trash-path" />
+  <line x1="7" y1="5" x2="7" y2="10" class="trash-path" />
+</svg>

@@ -1,0 +1,10 @@
+<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trending Icon -->
+  <defs>
+    <style>
+      .trending-path { fill: none; stroke: #6b7280; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <polyline points="2,16 7,10 11,14 18,7" class="trending-path" />
+  <polyline points="15,7 18,7 18,10" class="trending-path" />
+</svg>

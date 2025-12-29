@@ -1,0 +1,62 @@
+.header {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(32, 32, 37, 1) 100%);
+  padding: 24px 27px;
+  border-bottom: 1px solid #302D2D;
+}
+
+.container {
+  max-width: 358px;
+  margin: 0 auto;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logoContainer {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(180deg, rgba(165, 183, 133, 1) 0%, rgba(73, 81, 59, 1) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  color: #ffffff;
+  font-family: "Noto Serif", serif;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  color: #ffffff;
+  font-family: "Noto Serif", serif;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.tagline {
+  color: #ffffff;
+  font-family: "Noto Serif", serif;
+  font-size: 11px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  opacity: 0.9;
+}
