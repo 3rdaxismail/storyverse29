@@ -1,0 +1,71 @@
+# Dependencies
+node_modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+
+# Build
+dist
+dist-ssr
+build
+.next
+out
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.*.example
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+.vscode-test
+*.vsix
+.sublime-project
+.sublime-workspace
+
+# OS
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+
+# Testing
+coverage
+.nyc_output
+
+# Temporary
+.cache
+temp
+tmp
+*.tmp
+
+# Firebase
+.firebaserc
+.firebase
+firebase-debug.log
+
+# SSG Output (can be committed or not, depending on strategy)
+public/trending/index.html
+public/explore/index.html
+public/stories/index.html
