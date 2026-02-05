@@ -1,0 +1,70 @@
+import { useState, useEffect } from 'react';
+import styles from './PWAInstallPrompt.module.css';
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
+export default function PWAInstallPrompt() {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Save the event for later use
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    window.addEventListener('beforeinstallprompt', handler);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      // If native prompt not available, show instructions
+      alert('To install Storyverse:\n\n1. Tap your browser menu\n2. Look for "Install app" or "Add to Home Screen"\n3. Follow the prompts');
+      return;
+    }
+
+    // Show the install prompt
+    await deferredPrompt.prompt();
+
+    // Wait for the user's response
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === 'accepted') {
+      console.log('User accepted PWA installation');
+    }
+  };
+
+  return (
+    <div className={styles.installPrompt}>
+      <div className={styles.content}>
+        <div className={styles.icon}>
+          <svg width="40" height="40" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1024" height="1024" fill="#2F3640" rx="180"/>
+            <path d="M606.72 814.887C574.5 862.05 544.529 915.055 512 979C484.442 920.401 456.136 870.932 425.091 826.474C445.151 828.483 467.083 829.511 490.893 829.511C533.398 829.51 572.001 824.622 606.72 814.887Z" fill="#A7BA88"/>
+            <path d="M409.562 46C401.288 48.8045 393.192 51.9238 385.293 55.3876C344.539 73.5853 312.301 99.0659 288.589 131.821C264.88 164.576 253.038 203.17 253.038 247.571C253.04 274.497 256.351 299.244 263.019 321.804C270.429 343.642 282.298 364.394 298.601 384.048C314.902 402.971 336.396 420.814 363.07 437.554C389.745 454.294 422.361 470.292 460.89 485.576C502.384 502.318 536.841 518.344 564.257 533.63C591.671 548.187 612.042 564.571 625.379 582.768C639.457 600.237 646.518 621.348 646.518 646.096C646.516 679.574 634.269 707.587 609.82 730.15C586.109 752.714 552.399 764.013 508.684 764.014C479.046 764.014 452.741 757.084 429.771 743.256C406.799 728.698 388.62 707.589 375.282 679.928C362.688 651.541 356.406 616.601 356.406 575.115C334.917 575.115 314.519 578.385 295.253 584.937C275.993 591.487 260.429 602.404 248.575 617.685C245.637 621.292 243.067 625.225 240.857 629.458C215.544 607.643 188.391 585.243 159 561.607V46H409.562Z" fill="#A7BA88"/>
+            <path d="M865 561.607C838.375 581.078 814.062 599.714 791.635 617.933C792.658 608.961 793.216 599.775 793.216 590.389C793.214 554.732 786.182 523.44 772.109 496.513C758.029 468.852 735.414 444.086 704.292 422.249C673.172 400.414 632.054 379.3 580.932 358.921C531.285 339.267 493.114 321.072 466.438 304.33C439.762 286.861 421.613 269.378 411.98 251.908C402.35 234.442 397.537 215.526 397.536 195.149C397.536 173.312 402.347 155.116 411.98 140.558C422.354 125.272 435.692 113.973 451.994 106.694C469.035 98.6899 487.564 94.7041 507.568 94.7041C536.461 94.7048 559.428 103.064 576.469 119.8C593.512 136.542 605.757 156.581 613.167 179.874C621.314 203.161 625.379 224.994 625.379 245.371C671.319 245.371 705.401 236.627 727.631 219.16C750.602 201.69 762.097 180.224 762.097 154.748C762.097 130.727 753.57 109.261 736.526 90.3356C720.426 71.6435 695.288 56.8815 661.116 46H865V561.607Z" fill="#A7BA88"/>
+          </svg>
+        </div>
+        
+        <div className={styles.text}>
+          <h3 className={styles.title}>Install Storyverse</h3>
+          <p className={styles.description}>Get a better writing experience with our app</p>
+        </div>
+        
+        <div className={styles.actions}>
+          <button className={styles.installButton} onClick={handleInstallClick}>
+            Install
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

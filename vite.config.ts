@@ -1,65 +1,88 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
-import dotenv from 'dotenv';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 
-dotenv.config();
-
-/**
- * Vite Configuration for Storyverse
- * 
- * - React 19 with Fast Refresh
- * - Path aliases (@/* → src/*)
- * - Optimized bundle splitting
- * - Mobile-first responsive design
- */
+// https://vite.dev/config/
 export default defineConfig({
-  base: '/storyverse/',
-  plugins: [react()],
-  
-  define: {
-    'import.meta.env.VITE_FIGMA_API_TOKEN': JSON.stringify(process.env.FIGMA_API_TOKEN),
-  },
-  
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@pages': path.resolve(__dirname, './src/pages'),
-      '@styles': path.resolve(__dirname, './src/styles'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@services': path.resolve(__dirname, './src/services'),
-      '@types': path.resolve(__dirname, './src/types'),
-      '@context': path.resolve(__dirname, './src/context'),
-    },
-  },
-
-  build: {
-    target: 'ES2020',
-    minify: 'terser',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
-        },
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon-32x32.png', 'apple-touch-icon.png', 'storyverse-icon.svg'],
+      
+      // Inject service worker registration script
+      injectRegister: 'auto',
+      
+      manifest: {
+        name: 'Storyverse',
+        short_name: 'Storyverse',
+        description: 'Write, share, and discover stories offline-first',
+        theme_color: '#2F3640',
+        background_color: '#2F3640',
+        display: 'standalone',
+        orientation: 'portrait',
+        scope: '/',
+        start_url: '/',
+        icons: [
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          },
+          {
+            src: 'storyverse-icon.svg',
+            sizes: '1024x1024',
+            type: 'image/svg+xml',
+            purpose: 'any'
+          }
+        ]
       },
-    },
-  },
-
-  server: {
-    port: 5173,
-    open: true,
-    cors: true,
-  },
-
-  preview: {
-    port: 4173,
-    open: true,
-  },
-
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
-  },
-});
+      
+      workbox: {
+        // Cache all static assets
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,ttf}'],
+        
+        // Clean up old caches on activation
+        cleanupOutdatedCaches: true,
+        
+        // Skip waiting and claim clients immediately
+        skipWaiting: true,
+        clientsClaim: true,
+        
+        // Runtime caching for Firebase Storage (images)
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/firebasestorage\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'firebase-storage-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ],
+        
+        // Skip caching Firestore/Auth API calls (let Firebase SDK handle offline)
+        navigateFallback: null
+      },
+      
+      devOptions: {
+        enabled: true, // Enable in dev for testing
+        type: 'module'
+      }
+    })
+  ],
+  assetsInclude: ['**/*.svg'],
+})

@@ -1,0 +1,131 @@
+.installPrompt {
+  margin: 24px 0;
+  padding: 0;
+}
+
+.content {
+  background: linear-gradient(135deg, rgba(47, 54, 64, 0.95), rgba(47, 54, 64, 0.85));
+  border: 1px solid rgba(167, 186, 136, 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.content:hover {
+  border-color: rgba(167, 186, 136, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #2F3640;
+}
+
+.icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.3;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.installButton {
+  background: #A7BA88;
+  color: #2F3640;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.installButton:hover {
+  background: #B8CB99;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(167, 186, 136, 0.2);
+}
+
+.installButton:active {
+  transform: translateY(0);
+}
+
+.dismissButton {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dismissButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Mobile optimization */
+@media (max-width: 480px) {
+  .content {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .title {
+    font-size: 15px;
+  }
+  
+  .description {
+    font-size: 13px;
+  }
+  
+  .installButton {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
