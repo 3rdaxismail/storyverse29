@@ -8,83 +8,76 @@
   font-family: 'Noto Sans', sans-serif;
 }
 
-/* Header */
+/* Header - Matches Dashboard HeaderBar */
 .header {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1rem 0;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  background: var(--bg-primary, #0d0d0f);
+  padding-top: 24px;
 }
 
 .headerContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 16px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.logo {
-  height: 40px;
-  width: auto;
-  display: block;
+  justify-content: space-between;
 }
 
 .headerLine {
   width: 100%;
-  height: auto;
+  height: 1px;
   display: block;
-  margin-top: 1rem;
+  object-fit: cover;
 }
 
-.nav {
+/* left group */
+.left {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  gap: 12px;
 }
 
-.navLink {
-  background: transparent;
-  color: rgba(255, 255, 255, 1);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.2s;
-  font-family: 'Noto Sans', sans-serif;
+.logo {
+  height: 28px;
+  width: auto;
 }
 
-.navLink:hover {
-  color: rgba(167, 186, 136, 1);
+/* right group */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.navButton {
+.loginButton {
   background: rgba(167, 186, 136, 1);
   color: rgba(0, 0, 0, 1);
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 8px 20px;
   font-size: 14px;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s;
-  font-family: 'Noto Sans', sans-serif;
+  transition: all 0.2s ease;
+  font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.navButton:hover {
+.loginButton:hover {
   background: rgba(165, 183, 133, 1);
-  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.loginButton:active {
+  transform: scale(0.98);
 }
 
 .content {
   max-width: 900px;
   margin: 0 auto;
-  padding: 4rem 1.5rem;
+  padding: 8rem 1.5rem 4rem 1.5rem;
 }
 
 .hero {
