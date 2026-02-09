@@ -190,6 +190,33 @@
   line-height: 26px;
 }
 
+/* Support Section */
+.support {
+  text-align: center;
+  padding: 3rem 0;
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.supportText {
+  font-size: 16px;
+  color: rgba(245, 245, 245, 0.8);
+  margin: 0;
+  line-height: 24px;
+}
+
+.supportEmail {
+  color: rgba(167, 186, 136, 1);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.supportEmail:hover {
+  color: rgba(165, 183, 133, 1);
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .headerContent {
     flex-direction: row;

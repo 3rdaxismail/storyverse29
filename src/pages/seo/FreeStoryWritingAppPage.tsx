@@ -158,6 +158,16 @@ export default function FreeStoryWritingAppPage() {
               </p>
             </div>
           </section>
+
+          {/* Support Section */}
+          <section className={styles.support}>
+            <p className={styles.supportText}>
+              Need help? Contact us at{' '}
+              <a href="mailto:3rdaxismail@gmail.com" className={styles.supportEmail}>
+                3rdaxismail@gmail.com
+              </a>
+            </p>
+          </section>
         </main>
       </div>
     </>
