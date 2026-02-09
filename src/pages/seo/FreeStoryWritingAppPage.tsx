@@ -5,6 +5,8 @@
  */
 import { useNavigate } from 'react-router-dom';
 import SEOHead from '../../components/seo/SEOHead';
+import logo from '../../assets/smaller_logo.svg';
+import headerLine from '../../assets/header_line.svg';
 import styles from './FreeStoryWritingAppPage.module.css';
 
 export default function FreeStoryWritingAppPage() {
@@ -40,7 +42,7 @@ export default function FreeStoryWritingAppPage() {
         {/* Header */}
         <header className={styles.header}>
           <div className={styles.headerContent}>
-            <h2 className={styles.logo}>Storyverse</h2>
+            <img src={logo} alt="Storyverse" className={styles.logo} />
             <nav className={styles.nav}>
               <button onClick={() => navigate('/auth/signin')} className={styles.navLink}>
                 Sign In
@@ -50,6 +52,7 @@ export default function FreeStoryWritingAppPage() {
               </button>
             </nav>
           </div>
+          <img src={headerLine} alt="" className={styles.headerLine} aria-hidden="true" />
         </header>
 
         <main className={styles.content}>

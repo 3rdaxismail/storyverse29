@@ -29,10 +29,16 @@
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 600;
-  color: rgba(167, 186, 136, 1);
-  margin: 0;
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.headerLine {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 1rem;
 }
 
 .nav {
