@@ -37,6 +37,21 @@ export default function FreeStoryWritingAppPage() {
       />
       
       <div className={styles.container}>
+        {/* Header */}
+        <header className={styles.header}>
+          <div className={styles.headerContent}>
+            <h2 className={styles.logo}>Storyverse</h2>
+            <nav className={styles.nav}>
+              <button onClick={() => navigate('/auth/signin')} className={styles.navLink}>
+                Sign In
+              </button>
+              <button onClick={() => navigate('/auth/signup')} className={styles.navButton}>
+                Get Started Free
+              </button>
+            </nav>
+          </div>
+        </header>
+
         <main className={styles.content}>
           <section className={styles.hero}>
             <h1 className={styles.mainHeading}>
