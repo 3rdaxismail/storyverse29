@@ -1,0 +1,30 @@
+/**
+ * TitleInputBlock styles
+ * No border - clean minimal design
+ */
+
+.titleInputBlock {
+  height: 34px;
+  background: transparent;
+  border: none;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+}
+
+.titleInput {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: var(--font-heading-weight);
+  font-size: var(--font-heading-size);
+  line-height: var(--font-heading-line-height);
+  color: rgba(255, 255, 255, 1);
+  padding: 0;
+}
+
+.titleInput::placeholder {
+  color: rgba(112, 112, 112, 1);
+}

@@ -1,0 +1,16 @@
+/**
+ * Card - Minimal wrapper for section boundaries
+ * No border by default, shows brand color border when focused/selected
+ */
+.card {
+  background: rgba(20, 20, 22, 1);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 12px;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.card:focus-within {
+  border-color: rgba(165, 183, 133, 1); /* Brand primary color */
+}

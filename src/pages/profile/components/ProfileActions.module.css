@@ -1,0 +1,131 @@
+/**
+ * ProfileActions Styles
+ * Follow and Message buttons with premium interactions
+ */
+
+.actionsContainer {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  animation: slideInUp 0.8s ease-out 0.6s both;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Follow Button */
+.followButton {
+  flex: 1;
+  padding: 14px 24px;
+  background: rgba(165, 183, 133, 1);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(13, 13, 15, 1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.followButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.4s ease;
+}
+
+.followButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(165, 183, 133, 0.35);
+}
+
+.followButton:hover::before {
+  left: 100%;
+}
+
+.followButton:active {
+  transform: translateY(0);
+}
+
+/* Following State */
+.followButton.following {
+  background: rgba(20, 20, 23, 1);
+  color: rgba(165, 183, 133, 1);
+  border: 1.5px solid rgba(165, 183, 133, 0.5);
+}
+
+.followButton.following:hover {
+  border-color: rgba(165, 183, 133, 0.8);
+  box-shadow: 0 8px 20px rgba(165, 183, 133, 0.25);
+}
+
+/* Message Button */
+.messageButton {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  background: rgba(20, 20, 23, 1);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(165, 183, 133, 1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.messageButton:hover {
+  border-color: rgba(165, 183, 133, 0.5);
+  background: rgba(165, 183, 133, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(165, 183, 133, 0.2);
+}
+
+.messageButton:active {
+  transform: translateY(0);
+}
+
+.messageButton svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.messageButton:hover svg {
+  transform: scale(1.1);
+}
+
+@media (min-width: 768px) {
+  .actionsContainer {
+    max-width: 400px;
+    gap: 16px;
+  }
+
+  .followButton {
+    padding: 16px 32px;
+    font-size: 1.0625rem;
+  }
+
+  .messageButton {
+    width: 56px;
+    height: 56px;
+  }
+}

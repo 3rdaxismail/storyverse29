@@ -1,0 +1,44 @@
+/**
+ * StoryStatsBlock (271:143)
+ * HORIZONTAL layout, 9px itemSpacing, 4px padding
+ * CENTER aligned both axes, h=37px
+ */
+.storyStatsBlock {
+  height: 37px;
+  background: rgba(43, 42, 48, 1);
+  border-radius: 10px;
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  gap: 9px; /* exact itemSpacing from Figma */
+  justify-content: center;
+  align-items: center;
+}
+
+/**
+ * Frame 24-29 - VERTICAL layout, CENTER aligned
+ * Each stat item is h=32px
+ */
+.statItem {
+  height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 1);
+}
+
+.value {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 1);
+}

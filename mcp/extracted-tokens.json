@@ -1,0 +1,225 @@
+﻿{
+    "colors":  {
+                   "State_offline":  "rgba(255, 255, 255, 1.0)",
+                   "Borders":  "rgba(0, 0, 0, 1.0)",
+                   "text_content":  "rgba(245, 245, 245, 1.0)",
+                   "font_subheading_18px_Medium_26px_line_height_Supporting_lines_onboarding_text_One_Scene_at_a_Time_":  "rgba(0, 0, 0, 1.0)",
+                   "Rectangle_19":  "rgba(27, 28, 30, 1.0)",
+                   "Text_white":  "rgba(0, 0, 0, 1.0)",
+                   "This_section_failed_to_load_Reload_":  "rgba(146, 146, 147, 1.0)",
+                   "Brand_main_anchor_color":  "rgba(0, 0, 0, 1.0)",
+                   "Ellipse_1":  "rgba(217, 217, 217, 1.0)",
+                   "State_writing":  "rgba(255, 255, 255, 1.0)",
+                   "State_syncing":  "rgba(255, 255, 255, 1.0)",
+                   "Rectangle_4":  "rgba(255, 108, 87, 1.0)",
+                   "Text_temp":  "rgba(0, 0, 0, 1.0)",
+                   "surface_base":  "rgba(22, 27, 34, 1.0)",
+                   "Rectangle_1":  "rgba(167, 147, 255, 1.0)",
+                   "icons":  "rgba(0, 0, 0, 1.0)",
+                   "font_display_36px_SemiBold_44px_line_height_Landing_hero_emotional_statements_Millions_start_stories_":  "rgba(0, 0, 0, 1.0)",
+                   "Rectangle_8":  "rgba(167, 186, 136, 1.0)",
+                   "font_body_16px_Regular_26px_line_height_Story_writing_reader_view_card_descriptions":  "rgba(0, 0, 0, 1.0)",
+                   "Rectangle_2":  "rgba(67, 255, 146, 1.0)",
+                   "State_loading":  "rgba(255, 255, 255, 1.0)",
+                   "Text_black":  "rgba(0, 0, 0, 1.0)",
+                   "Rectangle_15":  "rgba(47, 54, 64, 1.0)",
+                   "Rectangle_22":  "rgba(146, 146, 147, 1.0)",
+                   "offline":  "rgba(146, 146, 147, 1.0)",
+                   "Rectangle_9":  "rgba(22, 27, 34, 1.0)",
+                   "Rectangle_3":  "rgba(255, 219, 75, 1.0)",
+                   "Vector":  "rgba(255, 255, 255, 1.0)",
+                   "placeholder_text":  "rgba(146, 146, 147, 1.0)",
+                   "Rectangle_14":  "rgba(162, 162, 162, 1.0)",
+                   "icon_trending":  "rgba(255, 255, 255, 1.0)",
+                   "Ellipse_16":  "rgba(67, 255, 146, 1.0)",
+                   "State_idle":  "rgba(255, 255, 255, 1.0)",
+                   "State_empty":  "rgba(255, 255, 255, 1.0)",
+                   "Card_grey_background":  "rgba(0, 0, 0, 1.0)",
+                   "indicator_unread_inbox":  "rgba(255, 108, 87, 1.0)",
+                   "font_ui_14px_Medium_20px_line_height_Buttons_stats_inputs_navigation_labels":  "rgba(0, 0, 0, 1.0)",
+                   "Rectangle_5":  "rgba(255, 169, 251, 1.0)",
+                   "Rectangle_11":  "rgba(15, 18, 22, 1.0)",
+                   "Accent_colors":  "rgba(0, 0, 0, 1.0)",
+                   "Union":  "rgba(112, 112, 112, 1.0)",
+                   "Rectangle_7":  "rgba(44, 56, 56, 1.0)",
+                   "Rectangle_23":  "rgba(146, 146, 147, 1.0)",
+                   "font_meta_12px_Regular_18px_line_height_Timestamps_helper_text_captions":  "rgba(0, 0, 0, 1.0)",
+                   "indicator_unread_community":  "rgba(255, 0, 132, 1.0)",
+                   "Rectangle_18":  "rgba(245, 245, 245, 1.0)",
+                   "Rectangle_24":  "rgba(146, 146, 147, 1.0)",
+                   "Rectangle_10":  "rgba(216, 216, 217, 1.0)",
+                   "App_background":  "rgba(0, 0, 0, 1.0)",
+                   "syncing":  "rgba(146, 146, 147, 1.0)",
+                   "Rectangle_17":  "rgba(255, 108, 87, 1.0)",
+                   "State_error":  "rgba(255, 255, 255, 1.0)",
+                   "Saved":  "rgba(245, 245, 245, 1.0)",
+                   "Rectangle_13":  "rgba(121, 165, 255, 1.0)",
+                   "Card_dark_background":  "rgba(0, 0, 0, 1.0)",
+                   "Text_1":  "rgba(0, 0, 0, 1.0)",
+                   "font_heading_24px_SemiBold_32px_line_height_Page_titles_dashboard_headings_Craft_the_Epic_":  "rgba(0, 0, 0, 1.0)",
+                   "Rectangle_21":  "rgba(146, 146, 147, 1.0)"
+               },
+    "fonts":  {
+                  "font_subheading_18px_Medium_26px_line_height_Supporting_lines_onboarding_text_One_Scene_at_a_Time_":  {
+                                                                                                                             "letterSpacing":  0.0,
+                                                                                                                             "lineHeight":  26.0,
+                                                                                                                             "fontFamily":  "Noto Sans",
+                                                                                                                             "fontWeight":  500,
+                                                                                                                             "fontSize":  18.0
+                                                                                                                         },
+                  "Text_white":  {
+                                     "letterSpacing":  0.0,
+                                     "lineHeight":  16.343999862670898,
+                                     "fontFamily":  "Noto Sans",
+                                     "fontWeight":  300,
+                                     "fontSize":  12.0
+                                 },
+                  "Accent_colors":  {
+                                        "letterSpacing":  0.0,
+                                        "lineHeight":  16.343999862670898,
+                                        "fontFamily":  "Noto Sans",
+                                        "fontWeight":  300,
+                                        "fontSize":  12.0
+                                    },
+                  "font_body_16px_Regular_26px_line_height_Story_writing_reader_view_card_descriptions":  {
+                                                                                                              "letterSpacing":  0.0,
+                                                                                                              "lineHeight":  26.0,
+                                                                                                              "fontFamily":  "Noto Sans",
+                                                                                                              "fontWeight":  400,
+                                                                                                              "fontSize":  16.0
+                                                                                                          },
+                  "syncing":  {
+                                  "letterSpacing":  0.0,
+                                  "lineHeight":  15.599999427795410,
+                                  "fontFamily":  "Noto Sans",
+                                  "fontWeight":  300,
+                                  "fontSize":  12.0
+                              },
+                  "font_meta_12px_Regular_18px_line_height_Timestamps_helper_text_captions":  {
+                                                                                                  "letterSpacing":  0.0,
+                                                                                                  "lineHeight":  18.0,
+                                                                                                  "fontFamily":  "Noto Sans",
+                                                                                                  "fontWeight":  400,
+                                                                                                  "fontSize":  12.0
+                                                                                              },
+                  "font_display_36px_SemiBold_44px_line_height_Landing_hero_emotional_statements_Millions_start_stories_":  {
+                                                                                                                                "letterSpacing":  0.0,
+                                                                                                                                "lineHeight":  44.0,
+                                                                                                                                "fontFamily":  "Noto Sans",
+                                                                                                                                "fontWeight":  600,
+                                                                                                                                "fontSize":  36.0
+                                                                                                                            },
+                  "Text_temp":  {
+                                    "letterSpacing":  0.0,
+                                    "lineHeight":  16.343999862670898,
+                                    "fontFamily":  "Noto Sans",
+                                    "fontWeight":  300,
+                                    "fontSize":  12.0
+                                },
+                  "font_heading_24px_SemiBold_32px_line_height_Page_titles_dashboard_headings_Craft_the_Epic_":  {
+                                                                                                                     "letterSpacing":  0.0,
+                                                                                                                     "lineHeight":  32.0,
+                                                                                                                     "fontFamily":  "Noto Sans",
+                                                                                                                     "fontWeight":  600,
+                                                                                                                     "fontSize":  24.0
+                                                                                                                 },
+                  "Borders":  {
+                                  "letterSpacing":  0.0,
+                                  "lineHeight":  16.343999862670898,
+                                  "fontFamily":  "Noto Sans",
+                                  "fontWeight":  300,
+                                  "fontSize":  12.0
+                              },
+                  "Card_grey_background":  {
+                                               "letterSpacing":  0.0,
+                                               "lineHeight":  16.343999862670898,
+                                               "fontFamily":  "Noto Sans",
+                                               "fontWeight":  300,
+                                               "fontSize":  12.0
+                                           },
+                  "Saved":  {
+                                "letterSpacing":  0.0,
+                                "lineHeight":  15.599999427795410,
+                                "fontFamily":  "Noto Sans",
+                                "fontWeight":  300,
+                                "fontSize":  12.0
+                            },
+                  "icons":  {
+                                "letterSpacing":  0.0,
+                                "lineHeight":  16.343999862670898,
+                                "fontFamily":  "Noto Sans",
+                                "fontWeight":  300,
+                                "fontSize":  12.0
+                            },
+                  "Brand_main_anchor_color":  {
+                                                  "letterSpacing":  0.0,
+                                                  "lineHeight":  16.343999862670898,
+                                                  "fontFamily":  "Noto Sans",
+                                                  "fontWeight":  300,
+                                                  "fontSize":  12.0
+                                              },
+                  "offline":  {
+                                  "letterSpacing":  0.0,
+                                  "lineHeight":  15.599999427795410,
+                                  "fontFamily":  "Noto Sans",
+                                  "fontWeight":  300,
+                                  "fontSize":  12.0
+                              },
+                  "text_content":  {
+                                       "letterSpacing":  0.0,
+                                       "lineHeight":  15.599999427795410,
+                                       "fontFamily":  "Noto Sans",
+                                       "fontWeight":  300,
+                                       "fontSize":  12.0
+                                   },
+                  "Text_1":  {
+                                 "letterSpacing":  0.0,
+                                 "lineHeight":  14.06250,
+                                 "fontFamily":  "Inter",
+                                 "fontWeight":  400,
+                                 "fontSize":  12.0
+                             },
+                  "App_background":  {
+                                         "letterSpacing":  0.0,
+                                         "lineHeight":  16.343999862670898,
+                                         "fontFamily":  "Noto Sans",
+                                         "fontWeight":  300,
+                                         "fontSize":  12.0
+                                     },
+                  "Text_black":  {
+                                     "letterSpacing":  0.0,
+                                     "lineHeight":  16.343999862670898,
+                                     "fontFamily":  "Noto Sans",
+                                     "fontWeight":  300,
+                                     "fontSize":  12.0
+                                 },
+                  "font_ui_14px_Medium_20px_line_height_Buttons_stats_inputs_navigation_labels":  {
+                                                                                                      "letterSpacing":  0.0,
+                                                                                                      "lineHeight":  20.0,
+                                                                                                      "fontFamily":  "Noto Sans",
+                                                                                                      "fontWeight":  500,
+                                                                                                      "fontSize":  14.0
+                                                                                                  },
+                  "placeholder_text":  {
+                                           "letterSpacing":  0.0,
+                                           "lineHeight":  15.599999427795410,
+                                           "fontFamily":  "Noto Sans",
+                                           "fontWeight":  300,
+                                           "fontSize":  12.0
+                                       },
+                  "Card_dark_background":  {
+                                               "letterSpacing":  0.0,
+                                               "lineHeight":  16.343999862670898,
+                                               "fontFamily":  "Noto Sans",
+                                               "fontWeight":  300,
+                                               "fontSize":  12.0
+                                           },
+                  "This_section_failed_to_load_Reload_":  {
+                                                              "letterSpacing":  0.0,
+                                                              "lineHeight":  15.599999427795410,
+                                                              "fontFamily":  "Noto Sans",
+                                                              "fontWeight":  300,
+                                                              "fontSize":  12.0
+                                                          }
+              }
+}

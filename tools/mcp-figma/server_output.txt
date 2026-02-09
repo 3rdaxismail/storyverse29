@@ -1,3 +1,0 @@
-🚀 Starting MCP Figma WebSocket server on port 3060...
-✅ MCP Figma WebSocket server is listening on port 3060
-MCP Figma client connected

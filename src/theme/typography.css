@@ -1,0 +1,200 @@
+/**
+ * TYPOGRAPHY UTILITY CLASSES
+ * 
+ * Use these classes for consistent typography across the app
+ * DO NOT create custom font styles in component CSS
+ * 
+ * Usage: <h1 className="text-hero-large">Title</h1>
+ */
+
+/* ================================================
+   HERO TEXT
+   ================================================ */
+.text-hero-large {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+}
+
+.text-hero-medium {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  letter-spacing: -0.01em;
+}
+
+/* ================================================
+   HEADINGS
+   ================================================ */
+.text-h1 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-h2 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+}
+
+.text-h3 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-base);
+}
+
+.text-h4 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-base);
+}
+
+/* ================================================
+   BODY TEXT
+   ================================================ */
+.text-body-large {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+}
+
+.text-body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-base);
+}
+
+.text-body-small {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-base);
+}
+
+/* ================================================
+   LABELS & UI TEXT
+   ================================================ */
+.text-label {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-base);
+}
+
+.text-label-small {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+}
+
+.text-caption {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-tight);
+}
+
+/* ================================================
+   WRITING SURFACE (Serif for story content)
+   ================================================ */
+.text-story-content {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-loose);
+}
+
+/* ================================================
+   COLOR UTILITIES
+   ================================================ */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-brand {
+  color: var(--brand-primary);
+}
+
+.text-error {
+  color: var(--status-error);
+}
+
+.text-success {
+  color: var(--status-success);
+}
+
+/* ================================================
+   FONT WEIGHT UTILITIES
+   ================================================ */
+.font-light {
+  font-weight: var(--font-weight-light);
+}
+
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+/* ================================================
+   TEXT TRANSFORM UTILITIES
+   ================================================ */
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+/* ================================================
+   TEXT ALIGNMENT
+   ================================================ */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}

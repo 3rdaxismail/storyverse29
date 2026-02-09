@@ -1,0 +1,2 @@
+Font will be downloaded from Google Fonts CDN at runtime
+https://fonts.google.com/noto/specimen/Noto+Sans

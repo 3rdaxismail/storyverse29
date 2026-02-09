@@ -1,0 +1,134 @@
+/**
+ * Dropdown styles - reusable for Privacy, Genre, and Audience
+ */
+
+.dropdownWrapper {
+  position: relative;
+}
+
+.dropdownButton {
+  height: 28px;
+  background: rgba(43, 42, 48, 1);
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.dropdownButton:hover {
+  opacity: 0.85;
+}
+
+.dropdownButton:active {
+  opacity: 0.7;
+}
+
+/* Disabled state */
+.dropdownButton.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dropdownButton.disabled:hover {
+  opacity: 0.4;
+}
+
+/* Variant: Privacy dropdown */
+.privacy {
+  min-width: fit-content;
+  background: rgba(48, 45, 45, 1);
+  border-radius: 25px;
+  padding: 2px 10px;
+  gap: 10px;
+}
+
+/* Variant: Genre dropdown */
+.genre {
+  min-width: 180px;
+  padding: 0 16px;
+  gap: 14px;
+}
+
+/* Variant: Audience dropdown */
+.audience {
+  min-width: fit-content;
+  padding: 2px 10px;
+  gap: 11px;
+}
+
+.dropdownLabel {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.privacy .dropdownLabel {
+  line-height: var(--font-ui-line-height);
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .genre {
+    min-width: 100px;
+    padding: 0 10px;
+    gap: 8px;
+  }
+  
+  .dropdownLabel {
+    font-size: 0.75rem;
+  }
+}
+
+/* Dropdown menu */
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 180px;
+  max-width: 320px;
+  background: rgba(43, 42, 48, 1);
+  border: 1px solid rgba(60, 60, 65, 1);
+  border-radius: 8px;
+  padding: 4px 0;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdownOption {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 12px 16px;
+  text-align: left;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.dropdownOption:hover {
+  background: rgba(60, 60, 65, 1);
+}
+
+.dropdownOption[aria-selected="true"] {
+  background: rgba(165, 183, 133, 0.2);
+  color: rgba(165, 183, 133, 1);
+}

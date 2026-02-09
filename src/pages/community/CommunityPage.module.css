@@ -1,0 +1,499 @@
+/* ==========================================
+   DISCORD-INSPIRED PREMIUM COMMUNITY LAYOUT
+   ========================================== */
+
+/* Community Shell - Full Height Discord-style */
+.communityShell {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 88px);
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* ==========================================
+   LEFT SIDEBAR - ROOM LIST (Discord-style)
+   ========================================== */
+
+.roomsList {
+  width: 240px;
+  min-width: 240px;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.roomsHeader {
+  padding: 16px;
+  margin-top: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.roomsTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: var(--font-family-primary);
+}
+
+.roomsContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.roomsContent::-webkit-scrollbar {
+  width: 4px;
+}
+
+.roomsContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.roomsContent::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+.roomItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  color: var(--text-tertiary);
+  position: relative;
+}
+
+.roomItem:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.roomItem.active {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.roomItem.active::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background: var(--brand-primary);
+  border-radius: 0 4px 4px 0;
+}
+
+.roomIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+  filter: grayscale(0.3);
+}
+
+.roomItem.active .roomIcon {
+  filter: grayscale(0);
+}
+
+.roomLabel {
+  font-size: 15px;
+  font-weight: 500;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================
+   MAIN CHAT AREA (Discord-style)
+   ========================================== */
+
+.chatSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  min-width: 0;
+}
+
+/* Chat Header - Discord top bar */
+.chatHeader {
+  height: 48px;
+  min-height: 48px;
+  padding: 0 16px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: var(--bg-primary);
+}
+
+.chatRoomName {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chatRoomDescription {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 0 0 0 12px;
+  padding-left: 12px;
+  border-left: 1px solid var(--bg-tertiary);
+}
+
+/* Messages Area - Discord message list */
+.messagesList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.messagesList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messagesList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messagesList::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+.messageRowIncoming,
+.messageRowOutgoing {
+  padding: 8px 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: background 0.1s ease;
+}
+
+.messageRowIncoming:hover,
+.messageRowOutgoing:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.messageAvatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 4px;
+  object-fit: cover;
+}
+
+.bubble {
+  flex: 1;
+  min-width: 0;
+}
+
+.username {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.time {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.content {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+/* Outgoing messages - Discord doesn't distinguish much, but subtle highlight */
+.messageRowOutgoing {
+  background: rgba(165, 183, 133, 0.03);
+}
+
+.messageRowOutgoing:hover {
+  background: rgba(165, 183, 133, 0.08);
+}
+
+/* Message Composer - Discord input bar */
+.composerBox {
+  padding: 16px;
+  background: var(--bg-primary);
+}
+
+.composerInput {
+  width: 100%;
+  min-height: 44px;
+  max-height: 120px;
+  padding: 12px 16px;
+  background: var(--bg-input);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: var(--font-family-primary);
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.composerInput:focus {
+  background: var(--bg-tertiary);
+}
+
+.composerInput::placeholder {
+  color: var(--text-placeholder);
+}
+
+.sendButton {
+  display: none;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE (Discord-style drawer)
+   ========================================== */
+
+@media (max-width: 900px) {
+  .communityShell {
+    height: calc(100vh - 148px);
+  }
+
+  /* Hide sidebar on mobile */
+  .roomsList {
+    display: none;
+  }
+
+  /* Mobile Hamburger Button */
+  .roomsDockTab {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(165, 183, 133, 0.15) 0%, rgba(165, 183, 133, 0.08) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(165, 183, 133, 0.3);
+    border-left: none;
+    border-radius: 0 16px 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 
+      2px 0 16px rgba(165, 183, 133, 0.2),
+      0 0 24px rgba(165, 183, 133, 0.1);
+    z-index: 100;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 
+        2px 0 16px rgba(165, 183, 133, 0.2),
+        0 0 24px rgba(165, 183, 133, 0.1);
+    }
+    50% {
+      box-shadow: 
+        2px 0 20px rgba(165, 183, 133, 0.4),
+        0 0 32px rgba(165, 183, 133, 0.2);
+    }
+  }
+
+  .roomsDockTab:hover {
+    width: 56px;
+    background: linear-gradient(135deg, rgba(165, 183, 133, 0.25) 0%, rgba(165, 183, 133, 0.15) 100%);
+    border-color: rgba(165, 183, 133, 0.5);
+    box-shadow: 
+      2px 0 24px rgba(165, 183, 133, 0.3),
+      0 0 40px rgba(165, 183, 133, 0.2);
+  }
+
+  .roomsDockTab:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .roomsDockIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(165, 183, 133, 1);
+    filter: drop-shadow(0 0 8px rgba(165, 183, 133, 0.4));
+    transition: all 0.2s ease;
+  }
+
+  .roomsDockTab:hover .roomsDockIcon {
+    transform: translateX(2px);
+    filter: drop-shadow(0 0 12px rgba(165, 183, 133, 0.6));
+  }
+
+  .roomsDockIndicator {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100vh;
+    background: linear-gradient(
+      to bottom,
+      var(--brand-primary) 0%,
+      var(--brand-primary) 40%,
+      transparent 100%
+    );
+    z-index: 99;
+    pointer-events: none;
+  }
+
+  /* Mobile Drawer Overlay */
+  .roomsDrawerOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 150;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Mobile Drawer */
+  .roomsDrawer {
+    position: fixed;
+    top: 88px;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--bg-secondary);
+    z-index: 151;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .roomsDrawer .roomsList {
+    display: flex;
+    width: 100%;
+    border-right: none;
+    background: transparent;
+  }
+
+  .roomsDrawerClose {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    background: var(--bg-tertiary);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-primary);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: all 0.15s ease;
+  }
+
+  .roomsDrawerClose:hover {
+    background: var(--bg-card);
+    transform: rotate(90deg);
+  }
+
+  .chatHeader {
+    padding: 0 12px 0 56px;
+  }
+
+  .chatRoomDescription {
+    display: none;
+  }
+
+  .messagesList {
+    padding: 12px 0;
+  }
+
+  .messageRowIncoming,
+  .messageRowOutgoing {
+    padding: 6px 12px;
+  }
+
+  .messageAvatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 14px;
+  }
+
+  .composerBox {
+    padding: 12px;
+  }
+
+  .composerInput {
+    font-size: 16px;
+  }
+}
+
+/* ==========================================
+   PREMIUM POLISH
+   ========================================== */
+
+/* Smooth scrolling */
+.messagesList,
+.roomsContent {
+  scroll-behavior: smooth;
+}
+
+/* Focus states */
+.roomItem:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: -2px;
+}
+
+/* Loading states placeholder */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}

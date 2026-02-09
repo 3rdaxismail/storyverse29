@@ -1,0 +1,543 @@
+/* Poem Reader - Mobile-first immersive design */
+
+.poemReaderRoot {
+  min-height: 100vh;
+  background: var(--bg-primary, #0a0e14);
+  color: var(--text-primary, #ffffff);
+  padding-bottom: 80px;
+  position: relative;
+}
+
+/* Back Button */
+.backButton {
+  position: absolute;
+  top: 24px;
+  left: 16px;
+  z-index: 800;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(13, 13, 15, 0.85);
+  border: 1px solid rgba(165, 183, 133, 0.3);
+  color: rgba(165, 183, 133, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  padding: 0;
+}
+
+.backButton:hover {
+  background: rgba(13, 13, 15, 1);
+  border-color: rgba(165, 183, 133, 0.6);
+  box-shadow: 0 0 20px rgba(165, 183, 133, 0.3);
+  transform: translateX(-2px);
+}
+
+.backButton:active {
+  transform: scale(0.95);
+}
+
+.backButton svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Hero Section with Cover Image */
+.readerHero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-height: 60vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.heroImageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.heroOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(10, 14, 20, 0.7) 30%, rgba(10, 14, 20, 0.95) 100%);
+}
+
+.heroPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a2332 0%, #0a0e14 100%);
+}
+
+/* Genre Badge */
+.genreBadge {
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  background: var(--brand-secondary, rgba(165, 183, 133, 0.9));
+  color: var(--text-dark, #1b1c1e);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  backdrop-filter: blur(8px);
+}
+
+/* Title Overlay */
+.heroContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 20px 24px;
+  z-index: 2;
+}
+
+.poemTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 12px 0;
+  color: #ffffff;
+  font-family: 'Noto Sans', sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.poemGenre {
+  font-size: 0.875rem;
+  color: rgba(165, 183, 133, 1);
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+  font-style: normal;
+  letter-spacing: 0.3px;
+}
+
+.poemMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.authorName {
+  font-weight: 500;
+}
+
+.metaDivider {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.readTime {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Action Bar */
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-primary, #0a0e14);
+  position: sticky;
+  top: 60px;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 6px 0;
+}
+
+.actionButton:hover {
+  color: var(--brand-primary, rgba(167, 186, 136, 1));
+}
+
+.actionButton.active {
+  color: var(--brand-primary, rgba(167, 186, 136, 1));
+}
+
+.actionButton svg {
+  flex-shrink: 0;
+}
+
+.actionCount {
+  font-weight: 600;
+  min-width: 32px;
+  text-align: left;
+}
+
+.actionLabel {
+  font-weight: 500;
+}
+
+/* Main Content */
+.readerMain {
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.readingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.stanza {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  position: relative;
+}
+
+.line {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Noto Sans', sans-serif;
+  text-align: left;
+}
+
+/* Bookmark Styles */
+.bookmarkedStanza {
+  position: relative;
+}
+
+.bookmarkedStanza::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 0;
+  width: 3px;
+  height: 5em; /* Approximately 3-5 lines */
+  background: var(--brand-primary, rgba(167, 186, 136, 1));
+  border-radius: 2px;
+}
+
+.bookmarkMarker {
+  position: absolute;
+  left: -20px;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--brand-primary, rgba(167, 186, 136, 1));
+  animation: bookmarkPulse 2s ease-in-out infinite;
+}
+
+@keyframes bookmarkPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Comments Modal */
+.commentsOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.commentsModal {
+  background: var(--bg-primary, #0a0e14);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.commentsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.commentsHeader h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.commentsBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.commentItem {
+  display: flex;
+  gap: 12px;
+}
+
+.commentAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--brand-primary-alpha-20, rgba(167, 186, 136, 0.2));
+  color: var(--brand-primary, rgba(167, 186, 136, 1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.commentContent {
+  flex: 1;
+}
+
+.commentAuthor {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin-bottom: 4px;
+}
+
+.commentText {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 6px;
+}
+
+.commentTime {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.commentsFooter {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.commentInput {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 10px 16px;
+  color: #ffffff;
+  font-size: 0.9375rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.commentInput:focus {
+  border-color: var(--brand-secondary, rgba(165, 183, 133, 0.5));
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.commentInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.sendButton {
+  background: var(--brand-secondary, rgba(165, 183, 133, 1));
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-dark, #1b1c1e);
+  flex-shrink: 0;
+}
+
+.sendButton:hover {
+  background: var(--brand-primary, rgba(167, 186, 136, 1));
+  transform: scale(1.05);
+}
+
+/* Tablet & Desktop */
+@media (min-width: 768px) {
+  .readerHero {
+    aspect-ratio: 3 / 4;
+    max-height: 700px;
+  }
+
+  .genreBadge {
+    top: 90px;
+    left: 32px;
+    font-size: 0.8125rem;
+    padding: 8px 16px;
+  }
+
+  .heroContent {
+    padding: 40px 32px 32px;
+  }
+
+  .poemTitle {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    font-family: 'Noto Sans', sans-serif;
+  }
+
+  .poemGenre {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .poemMeta {
+    font-size: 1rem;
+  }
+
+  .actionBar {
+    padding: 20px 32px;
+    gap: 32px;
+  }
+
+  .readerMain {
+    max-width: 720px;
+    padding: 48px 32px 80px;
+  }
+
+  .readingContainer {
+    gap: 40px;
+  }
+
+  .line {
+    font-size: 1.25rem;
+    line-height: 1.75;
+    font-family: 'Noto Sans', sans-serif;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1024px) {
+  .readerHero {
+    aspect-ratio: 3 / 4;
+    max-height: 750px;
+  }
+
+  .poemTitle {
+    font-size: 3.5rem;
+  }
+
+  .readerMain {
+    max-width: 900px;
+    padding: 56px 40px 100px;
+  }
+
+  .line {
+    font-size: 1.3125rem;
+  }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1440px) {
+  .readerMain {
+    max-width: 980px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .readerHero {
+    aspect-ratio: 3 / 4;
+    max-height: 80vh;
+  }
+
+  .poemTitle {
+    font-size: 1.75rem;
+  }
+
+  .poemMeta {
+    font-size: 0.875rem;
+  }
+
+  .actionBar {
+    gap: 16px;
+    padding: 12px 16px;
+  }
+
+  .actionButton {
+    font-size: 0.8125rem;
+  }
+
+  .actionCount {
+    min-width: 28px;
+  }
+
+  .readerMain {
+    padding: 24px 16px 40px;
+  }
+
+  .readingContainer {
+    gap: 24px;
+  }
+
+  .line {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+}

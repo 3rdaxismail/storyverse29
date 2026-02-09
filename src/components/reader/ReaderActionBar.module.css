@@ -1,0 +1,123 @@
+.actionBar {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 16px 24px;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 50;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .actionBar {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .actionBar {
+    max-width: 980px;
+  }
+}
+
+.actionBar.sticky {
+  position: fixed;
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 720px;
+  background: rgba(13, 13, 15, 0.98);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .actionBar.sticky {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .actionBar.sticky {
+    max-width: 980px;
+  }
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: rgba(162, 162, 162, 1);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.875rem;
+  padding: 8px 14px;
+  line-height: 1;
+  border-radius: 6px;
+  position: relative;
+}
+
+.actionButton:hover {
+  color: rgba(165, 183, 133, 1);
+  background: rgba(165, 183, 133, 0.08);
+  transform: translateY(-1px);
+}
+
+.actionButton.active {
+  color: rgba(165, 183, 133, 1);
+}
+
+.actionButton:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease;
+}
+
+.actionButton svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.count {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 600px) {
+  .actionBar {
+    gap: 16px;
+    padding: 14px 16px;
+  }
+
+  .actionBar.sticky {
+    padding: 12px 16px;
+    top: 88px;
+    gap: 14px;
+  }
+
+  .actionButton {
+    padding: 6px 10px;
+    font-size: 0.8125rem;
+  }
+
+  .count {
+    font-size: 0.8125rem;
+  }
+}

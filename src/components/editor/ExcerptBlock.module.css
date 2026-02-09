@@ -1,0 +1,77 @@
+/**
+ * ExcerptBlock (273:146) - VERTICAL, 4px gap
+ */
+.excerptBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* exact itemSpacing from Figma */
+}
+
+/**
+ * ExcerptHeading (74:3) - h=16px
+ * Font: Noto Sans 300, 12px, line-height 15.6px
+ * Color: rgba(165, 183, 133, 1)
+ */
+.excerptHeading {
+  width: 100%;
+  height: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1);
+  padding: 0;
+}
+
+.excerptHeading::placeholder {
+  color: rgba(165, 183, 133, 1);
+}
+
+/**
+ * Textarea wrapper for character count positioning
+ */
+.textareaWrapper {
+  position: relative;
+  width: 100%;
+}
+
+/**
+ * ExcerptBody (74:4) - Figma shows h=108px but text wraps
+ * Font: Noto Sans 300, 12px, line-height 15.6px
+ * Color: rgba(255, 255, 255, 1)
+ */
+.excerptBody {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 1);
+  padding: 0;
+  padding-bottom: 20px;
+  resize: none;
+}
+
+.excerptBody::placeholder {
+  color: rgba(112, 112, 112, 1);
+}
+
+/**
+ * Character counter
+ */
+.characterCount {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-family: var(--font-family-primary, 'Noto Sans', sans-serif);
+  font-size: var(--font-meta-size, 12px);
+  font-weight: var(--font-meta-weight, 400);
+  color: var(--color-text-muted, rgba(162, 162, 162, 1));
+  pointer-events: none;
+}

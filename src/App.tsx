@@ -14,8 +14,12 @@ import CharacterProfilePage from './pages/character-profile/CharacterProfilePage
 import ProfilePage from './pages/profile/ProfilePage';
 import PublicProfilePage from './pages/profile/PublicProfilePage';
 import ScreenLayout from './pages/ScreenLayout';
-import { useInboxState } from './hooks/useInboxState';
+import { InboxProvider } from './contexts/InboxContext';
 import PWAUpdateNotification from './components/pwa/PWAUpdateNotification';
+import OfflineNotice from './components/common/OfflineNotice';
+import { useOnlineStatus } from './hooks/useOnlineStatus';
+import SessionConflictModal from './components/session/SessionConflictModal';
+import { useAuth } from './firebase/AuthContext';
 
 // Auth pages
 import WelcomePage from './pages/auth/WelcomePage';
@@ -25,6 +29,15 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import FirstTimeProfileSetupPage from './pages/auth/FirstTimeProfileSetupPage';
 
+// Public SEO pages (no auth required)
+import PublicStoryPage from './pages/public/PublicStoryPage';
+import PublicPoemPage from './pages/public/PublicPoemPage';
+import PublicUserProfilePage from './pages/public/PublicUserProfilePage';
+import FreeStoryWritingAppPage from './pages/seo/FreeStoryWritingAppPage';
+
+// SEO Provider
+import SEOProvider from './components/seo/SEOProvider';
+
 // Route guards
 import ProtectedRoute from './components/common/ProtectedRoute';
 import PublicRoute from './components/common/PublicRoute';
@@ -33,25 +46,49 @@ const InboxPage = lazy(() => import('./pages/inbox/InboxPage'));
 const InboxThreadPage = lazy(() => import('./pages/inbox/InboxThreadPage'));
 
 function App() {
-  // Provide inbox state at top level for header badge
-  useInboxState();
+  // Monitor online/offline status globally
+  const isOnline = useOnlineStatus();
+  const { sessionStatus, sessionConflict } = useAuth();
+  
   return (
-    <BrowserRouter>
-      <PWAUpdateNotification />
-      <Suspense fallback={null}>
-        <Routes>
-          {/* Auth Routes - redirect to home if authenticated */}
-          <Route path="/auth/welcome" element={<PublicRoute><WelcomePage /></PublicRoute>} />
-          <Route path="/auth/signup" element={<PublicRoute><SignUpPage /></PublicRoute>} />
-          <Route path="/auth/signin" element={<PublicRoute><SignInPage /></PublicRoute>} />
-          <Route path="/auth/forgot-password" element={<PublicRoute><ForgotPasswordPage /></PublicRoute>} />
-          <Route path="/auth/reset-password" element={<PublicRoute><ResetPasswordPage /></PublicRoute>} />
-          <Route path="/auth/profile-setup" element={<ProtectedRoute requireProfileComplete={false}><FirstTimeProfileSetupPage /></ProtectedRoute>} />
+    <SEOProvider>
+      <InboxProvider>
+        <BrowserRouter>
+          <PWAUpdateNotification />
+          <OfflineNotice isOnline={isOnline} />
+          
+          {/* Show session conflict modal when needed */}
+          {sessionStatus === 'conflicted' && sessionConflict && (
+            <SessionConflictModal
+              conflict={sessionConflict}
+              onResolve={() => {
+                // Modal will call deviceSessionManager.activateThisDevice()
+                // which will trigger the status change to 'active'
+                console.log('[App] Session conflict resolved');
+              }}
+            />
+          )}
+          
+          <Suspense fallback={null}>
+            <Routes>
+            {/* Public SEO Routes - NO authentication required */}
+            <Route path="/story/:slug" element={<PublicStoryPage />} />
+            <Route path="/poem/:slug" element={<PublicPoemPage />} />
+            <Route path="/user/:username" element={<PublicUserProfilePage />} />
+            <Route path="/free-story-writing-app" element={<FreeStoryWritingAppPage />} />
+            
+            {/* Auth Routes - redirect to home if authenticated */}
+            <Route path="/auth/welcome" element={<PublicRoute><WelcomePage /></PublicRoute>} />
+            <Route path="/auth/signup" element={<PublicRoute><SignUpPage /></PublicRoute>} />
+            <Route path="/auth/signin" element={<PublicRoute><SignInPage /></PublicRoute>} />
+            <Route path="/auth/forgot-password" element={<PublicRoute><ForgotPasswordPage /></PublicRoute>} />
+            <Route path="/auth/reset-password" element={<PublicRoute><ResetPasswordPage /></PublicRoute>} />
+            <Route path="/auth/profile-setup" element={<ProtectedRoute requireProfileComplete={false}><FirstTimeProfileSetupPage /></ProtectedRoute>} />
 
-          {/* Main App Routes - require authentication */}
-          <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-          <Route path="/create" element={<ProtectedRoute><CreateProjectPage /></ProtectedRoute>} />
+            {/* Main App Routes - require authentication */}
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="/home" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+            <Route path="/create" element={<ProtectedRoute><CreateProjectPage /></ProtectedRoute>} />
           <Route
             path="/editor/story/:storyId"
             element={
@@ -65,11 +102,9 @@ function App() {
           <Route
             path="/story/view/:storyId"
             element={
-              <ProtectedRoute>
-                <ScreenLayout>
-                  <StoryReaderPage />
-                </ScreenLayout>
-              </ProtectedRoute>
+              <ScreenLayout>
+                <StoryReaderPage />
+              </ScreenLayout>
             }
           />
           <Route
@@ -85,11 +120,9 @@ function App() {
           <Route
             path="/poem/view/:poemId"
             element={
-              <ProtectedRoute>
-                <ScreenLayout>
-                  <PoemReaderPage />
-                </ScreenLayout>
-              </ProtectedRoute>
+              <ScreenLayout>
+                <PoemReaderPage />
+              </ScreenLayout>
             }
           />
           <Route
@@ -156,9 +189,11 @@ function App() {
           />
           {/* fallback: redirect unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </InboxProvider>
+    </SEOProvider>
   );
 }
 

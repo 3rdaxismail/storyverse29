@@ -1,0 +1,258 @@
+/**
+ * PhotoCropEditor - Storyverse themed floating editor
+ * Mobile-first, minimal, writer-focused
+ */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 18, 22, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.editor {
+  background: rgba(20, 20, 22, 1);
+  border: 1px solid rgba(44, 56, 56, 0.6);
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(44, 56, 56, 0.4);
+}
+
+.title {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-subheading-size);
+  font-weight: 500;
+  line-height: 26px;
+  color: rgba(245, 245, 245, 1);
+  margin: 0;
+}
+
+.cropArea {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.canvas {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hint {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-meta-size);
+  line-height: 18px;
+  color: rgba(146, 146, 147, 0.8);
+  font-weight: 400;
+}
+
+.controls {
+  padding: 0 24px 20px;
+}
+
+.zoomLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zoomLabel > span {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  line-height: 20px;
+  color: rgba(245, 245, 245, 1);
+}
+
+.zoomControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zoomButton {
+  width: 32px;
+  height: 32px;
+  background: rgba(47, 54, 64, 1);
+  border: 1px solid rgba(44, 56, 56, 0.6);
+  border-radius: 6px;
+  color: rgba(245, 245, 245, 1);
+  font-size: var(--font-subheading-size);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.zoomButton:hover {
+  background: rgba(57, 64, 74, 1);
+  border-color: rgba(165, 183, 133, 0.4);
+}
+
+.zoomButton:active {
+  transform: scale(0.95);
+}
+
+.zoomSlider {
+  flex: 1;
+  height: 4px;
+  background: rgba(47, 54, 64, 1);
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.zoomSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: rgba(165, 183, 133, 1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.zoomSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.zoomSlider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: rgba(165, 183, 133, 1);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.zoomSlider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+
+.cancelButton,
+.saveButton {
+  flex: 1;
+  padding: 12px 20px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  line-height: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.cancelButton {
+  background: transparent;
+  border: 1px solid rgba(44, 56, 56, 0.6);
+  color: rgba(245, 245, 245, 0.8);
+}
+
+.cancelButton:hover {
+  background: rgba(47, 54, 64, 0.4);
+  border-color: rgba(44, 56, 56, 1);
+}
+
+.saveButton {
+  background: rgba(165, 183, 133, 1);
+  color: rgba(15, 18, 22, 1);
+}
+
+.saveButton:hover {
+  background: rgba(175, 193, 143, 1);
+}
+
+.saveButton:active,
+.cancelButton:active {
+  transform: scale(0.98);
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .editor {
+    max-height: 95vh;
+  }
+
+  .header {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: var(--font-subheading-size);
+  }
+
+  .cropArea {
+    padding: 20px 16px;
+  }
+
+  .controls {
+    padding: 0 16px 16px;
+  }
+
+  .actions {
+    padding: 0 16px 20px;
+  }
+
+  .zoomButton {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-subheading-size);
+  }
+}

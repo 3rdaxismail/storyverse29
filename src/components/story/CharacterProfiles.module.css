@@ -1,0 +1,228 @@
+/**
+ * CharacterProfiles styles
+ * Mobile-first, CSS Grid-based character layout
+ * Even rows and columns with consistent spacing
+ */
+
+.characterProfiles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Header with expand/collapse */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1); /* green accent */
+  margin: 0;
+  padding: 0;
+}
+
+.expandButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+/* Secondary Green when hidden content exists */
+.expandButton.hasContent {
+  color: var(--status-success);
+}
+
+.expandButton.hasContent:hover {
+  color: var(--status-success);
+  transform: scale(1.1);
+}
+
+/* Brand Anchor when no hidden content */
+.expandButton.noContent {
+  color: var(--brand-primary);
+}
+
+.expandButton.noContent:hover {
+  color: var(--brand-primary);
+  transform: scale(1.1);
+}
+
+.expandButton:active {
+  transform: scale(0.95);
+}
+
+.chevronDown {
+  transition: transform 0.2s;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+.avatarList {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: 10px;
+  width: 100%;
+  transition: max-height 0.3s ease-out;
+  overflow: hidden;
+}
+
+.avatarList.collapsed {
+  max-height: 70px;
+}
+
+.avatarList.expanded {
+  max-height: 1000px;
+}
+
+/* Responsive grid - mobile-first approach */
+@media (min-width: 520px) {
+  .avatarList {
+    gap: 12px;
+  }
+}
+
+/* Character Avatar Button */
+.avatarButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.avatarButton:hover {
+  opacity: 0.8;
+}
+
+.avatarButton:active {
+  opacity: 0.6;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(43, 42, 48, 1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Larger avatars on bigger screens */
+@media (min-width: 520px) {
+  .avatar {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarInitial {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  color: rgba(255, 255, 255, 1);
+  text-transform: uppercase;
+}
+
+/* Larger initial text on bigger screens */
+@media (min-width: 520px) {
+  .avatarInitial {
+    font-size: var(--font-ui-size);
+  }
+}
+
+.characterName {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Add Character Button */
+.addButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.addButton:hover {
+  opacity: 0.8;
+}
+
+.addButton:active {
+  opacity: 0.6;
+}
+
+.addIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px dashed rgba(165, 183, 133, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Larger add icon on bigger screens */
+@media (min-width: 520px) {
+  .addIcon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.addLabel {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1);
+  text-align: center;
+}

@@ -1,0 +1,140 @@
+/* Full-screen offline lockdown overlay */
+.offlineOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.offlineOverlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+/* Premium blur backdrop */
+.blurBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(47, 54, 64, 0.85) 0%,
+    rgba(47, 54, 64, 0.90) 50%,
+    rgba(47, 54, 64, 0.85) 100%
+  );
+  backdrop-filter: blur(20px) saturate(0.8);
+  -webkit-backdrop-filter: blur(20px) saturate(0.8);
+  animation: fadeInBlur 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInBlur {
+  from {
+    backdrop-filter: blur(0px) saturate(1);
+    -webkit-backdrop-filter: blur(0px) saturate(1);
+    opacity: 0;
+  }
+  to {
+    backdrop-filter: blur(20px) saturate(0.8);
+    -webkit-backdrop-filter: blur(20px) saturate(0.8);
+    opacity: 1;
+  }
+}
+
+/* Center content container */
+.centerContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  animation: floatIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes floatIn {
+  from {
+    transform: translate(-50%, -50%) scale(0.8) translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Offline message styling */
+.offlineMessage {
+  text-align: center;
+  color: #FFFFFF;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 16px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+/* Subtle pulse animation for the whole overlay */
+.offlineOverlay.active .centerContent {
+  animation: floatIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+             breathe 4s ease-in-out 1s infinite;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 480px) {
+  .centerContent {
+    gap: 24px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    padding: 0 20px;
+  }
+}

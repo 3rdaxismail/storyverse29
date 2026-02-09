@@ -1,0 +1,66 @@
+/**
+ * MetaDropdownBlock styles
+ * Two-row layout: Genre hierarchy (row 1) + Audience & Reading Time (row 2)
+ */
+
+.metaDropdownBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Row 1: Three genre dropdowns */
+.genreRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Row 2: Audience (left) and Reading Time (right) */
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.readTimeBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.readTimeBadge span {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+}
+
+/* Mobile: ensure no horizontal overflow */
+@media (max-width: 480px) {
+  .genreRow {
+    gap: 6px;
+  }
+  
+  .bottomRow {
+    gap: 8px;
+  }
+}
+
+/* Tablet and up: maintain consistent spacing */
+@media (min-width: 768px) {
+  .genreRow {
+    gap: 10px;
+  }
+  
+  .bottomRow {
+    gap: 16px;
+  }
+}

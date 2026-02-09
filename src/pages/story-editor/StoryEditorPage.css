@@ -1,0 +1,74 @@
+/* src/pages/story-editor/StoryEditorPage.css */
+
+.story-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  /* Add padding for fixed header + breadcrumb */
+  padding-top: 60px;
+}
+
+/* Header and bottom nav are fixed - managed by their own components */
+.story-page > * {
+  flex-shrink: 0;
+}
+
+/* Only content scrolls */
+.story-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(51px + 32px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .story-content {
+    max-width: 600px;
+  }
+}
+
+.add-act-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 12px;
+  min-width: 150px;
+  background: transparent;
+  border: 2px dashed rgba(165, 183, 133, 0.3);
+  border-radius: 12px;
+  color: rgba(165, 183, 133, 1);
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 auto;
+}
+
+.add-act-button:hover {
+  border-color: rgba(165, 183, 133, 0.6);
+  background: rgba(165, 183, 133, 0.05);
+}
+
+.add-act-button:active {
+  border-color: rgba(165, 183, 133, 1);
+  background: rgba(165, 183, 133, 0.1);
+}
+
+@media print {
+  @page {
+    margin: 5ch; /* Sets all page margins to 1 inch */
+  }
+}

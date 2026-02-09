@@ -1,0 +1,251 @@
+/* Container matching StoryEditorPage layout */
+.container {
+  min-height: 100vh;
+  padding-top: 88px; /* Space for HeaderBar */
+  padding-bottom: 32px;
+  background: var(--bg-primary);
+}
+
+/* Content width matching StoryEditorPage.module.css */
+.content {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+  .content {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content {
+    max-width: 980px;
+  }
+}
+
+/* Profile Card - Inner content */
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+  gap: 32px;
+}
+
+/* Motivational Prompt */
+.prompt {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin: 0;
+  max-width: 400px;
+}
+
+/* Avatar Section */
+.avatarSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatarButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.avatarButton:hover {
+  opacity: 0.95;
+}
+
+/* Avatar Wrapper - Same as profile setup */
+.avatarWrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.6s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animated Ring Around Avatar */
+.avatarRing {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(165, 183, 133, 0.6),
+    rgba(165, 183, 133, 0.2),
+    rgba(165, 183, 133, 0.6)
+  );
+  background-size: 200% 200%;
+  animation: rotateGradient 6s linear infinite;
+  -webkit-mask: radial-gradient(circle, transparent 43%, black 50%);
+  mask: radial-gradient(circle, transparent 43%, black 50%);
+  z-index: 1;
+}
+
+@keyframes rotateGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Avatar Container */
+.avatarContainer {
+  position: relative;
+  width: 158px;
+  height: 158px;
+  border-radius: 50%;
+  background: rgba(20, 20, 23, 1);
+  border: 3px solid rgba(13, 13, 15, 1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.avatarButton:hover .avatarContainer {
+  transform: scale(1.05);
+}
+
+.avatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(20, 20, 23, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarPhoto {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.uploadText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--brand-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: opacity 0.2s ease;
+}
+
+.uploadText:hover {
+  opacity: 0.7;
+}
+
+.fileInput {
+  display: none;
+}
+
+/* Writer Identity */
+.identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.displayName {
+  font-size: var(--font-heading-size);
+  font-weight: var(--font-heading-weight);
+  line-height: var(--font-heading-line-height);
+  color: var(--text-primary);
+  text-align: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.displayName::placeholder {
+  color: var(--text-placeholder);
+  opacity: 0.6;
+}
+
+.displayName:focus {
+  background: var(--bg-tertiary);
+}
+
+/* Bio Card */
+.bioCard {
+  width: 100%;
+  max-width: 500px;
+  background: var(--bg-tertiary);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.bioCard:focus-within {
+  border-color: var(--brand-primary);
+}
+
+.bioInput {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-secondary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-body-weight);
+  line-height: var(--font-body-line-height);
+  resize: none;
+  font-family: var(--font-family-primary);
+}
+
+.bioInput::placeholder {
+  color: var(--text-placeholder);
+  opacity: 0.6;
+}

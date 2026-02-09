@@ -1,0 +1,128 @@
+.inboxPageRoot {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 70vh;
+}
+
+.header {
+  padding: 24px 16px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.unreadBadge {
+  padding: 6px 14px;
+  background: rgba(165, 183, 133, 0.15);
+  border: 1px solid rgba(165, 183, 133, 0.3);
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgba(165, 183, 133, 1);
+  letter-spacing: 0.01em;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.filterButton {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(162, 162, 162, 1);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterButton:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(245, 245, 245, 1);
+}
+
+.filterButton.active {
+  background: rgba(165, 183, 133, 0.1);
+  border-color: rgba(165, 183, 133, 0.5);
+  color: rgba(165, 183, 133, 1);
+}
+
+.threadList {
+  padding: 0 16px 16px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px;
+  color: rgba(112, 112, 112, 1);
+}
+
+.empty svg {
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.emptyTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgba(162, 162, 162, 1);
+  margin: 0 0 8px 0;
+}
+
+.emptySubtext {
+  font-size: 0.9375rem;
+  color: rgba(112, 112, 112, 1);
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* Responsive width constraints matching story editor */
+@media (min-width: 768px) {
+  .inboxPageRoot {
+    max-width: 720px;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inboxPageRoot {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .inboxPageRoot {
+    max-width: 980px;
+  }
+}

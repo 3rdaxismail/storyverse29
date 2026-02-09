@@ -1,0 +1,115 @@
+/**
+ * SPLASH SCREEN STYLES
+ * Premium loading screen with blurred background and animated logo
+ */
+
+.splashContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* Blurred background */
+.blurredBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(47, 54, 64, 0.98) 0%,
+    rgba(35, 40, 48, 0.98) 50%,
+    rgba(25, 30, 38, 0.98) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Animated gradient overlay */
+.gradientOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(165, 183, 133, 0.08) 0%,
+    rgba(165, 183, 133, 0.02) 40%,
+    transparent 70%
+  );
+  animation: pulseGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+/* Logo wrapper */
+.loaderWrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading message */
+.message {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin: 0;
+  animation: fadeIn 1s ease-in-out 0.5s backwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .loaderWrapper {
+    gap: 20px;
+  }
+  
+  .message {
+    font-size: 0.875rem;
+    padding: 0 20px;
+  }
+}

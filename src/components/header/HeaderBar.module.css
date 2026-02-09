@@ -1,0 +1,245 @@
+.header {
+  /* Fixed positioning at top of viewport */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  background: var(--bg-primary);
+  padding-top: 24px;
+}
+
+.headerContent {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerLine {
+  width: 100%;
+  height: 1px;
+  display: block;
+  object-fit: cover;
+}
+
+/* left group */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+}
+
+.backButton {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  transition: opacity 0.2s ease;
+}
+
+.backButton:hover {
+  opacity: 0.7;
+}
+
+.pageTitle {
+  font-family: var(--font-heading);
+  font-size: var(--font-subheading-size);
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* right group */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.messageButton {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.messageButton:hover {
+  opacity: 0.8;
+}
+
+.messageButton:active {
+  transform: scale(0.95);
+}
+
+.messageIcon {
+  width: 40px;
+  height: 36px;
+  display: block;
+}
+
+/* Avatar Button Container */
+.avatarButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.avatarButton:hover {
+  opacity: 0.8;
+}
+
+/* Avatar Wrapper - Similar to profile setup */
+.avatarWrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Solid Brand Green Ring */
+.avatarRing {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(165, 183, 133, 1);
+  -webkit-mask: radial-gradient(circle, transparent 42%, black 50%);
+  mask: radial-gradient(circle, transparent 42%, black 50%);
+  z-index: 1;
+}
+
+/* Avatar Container */
+.avatarContainer {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(20, 20, 23, 1);
+  border: 1px solid rgba(13, 13, 15, 1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.avatarButton:hover .avatarContainer {
+  transform: scale(1.05);
+}
+
+.avatarPhoto {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.profileDropdown {
+  position: relative;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(18, 18, 18, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+}
+
+.dropdownItem {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdownItem:hover {
+  background: rgba(165, 183, 133, 0.1);
+  color: rgba(165, 183, 133, 1);
+}
+
+.dropdownItem svg {
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.profileDropdown {
+  position: relative;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(18, 18, 18, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+}
+
+.dropdownItem {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdownItem:hover {
+  background: rgba(165, 183, 133, 0.1);
+  color: rgba(165, 183, 133, 1);
+}
+
+.dropdownItem svg {
+  flex-shrink: 0;
+  color: currentColor;
+}

@@ -1,0 +1,15 @@
+.screenLayoutRoot {
+  min-height: 100vh;
+  background: rgba(13, 13, 15, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* HeaderBar height is 88px (24+16+48), add safe-area if needed */
+  margin-top: 88px;
+  /* If HeaderBar ever changes height, update this value */
+}

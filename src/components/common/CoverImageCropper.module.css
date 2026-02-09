@@ -1,0 +1,226 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 16px;
+}
+
+.editor {
+  background: var(--bg-primary, #1a1a1a);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  animation: slideUp 0.25s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+  margin: 0 0 4px 0;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+  margin: 0;
+}
+
+.cropArea {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.canvas {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  touch-action: none;
+  user-select: none;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.5));
+  text-align: center;
+}
+
+.controls {
+  padding: 0 24px 24px;
+}
+
+.zoomLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.zoomControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zoomButton {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary, #ffffff);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.zoomButton:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.zoomButton:active {
+  transform: scale(0.95);
+}
+
+.zoomSlider {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.zoomSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(165, 183, 133, 1);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.zoomSlider::-webkit-slider-thumb:hover {
+  background: rgba(185, 203, 153, 1);
+  transform: scale(1.1);
+}
+
+.zoomSlider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(165, 183, 133, 1);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.zoomSlider::-moz-range-thumb:hover {
+  background: rgba(185, 203, 153, 1);
+  transform: scale(1.1);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+
+.cancelButton,
+.saveButton {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary, #ffffff);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.saveButton {
+  background: rgba(165, 183, 133, 1);
+  color: #000000;
+}
+
+.saveButton:hover {
+  background: rgba(185, 203, 153, 1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(165, 183, 133, 0.3);
+}
+
+.saveButton:active {
+  transform: translateY(0);
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .overlay {
+    padding: 0;
+  }
+
+  .editor {
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    margin-top: auto;
+  }
+
+  .cropArea {
+    padding: 20px 16px;
+  }
+
+  .controls {
+    padding: 0 16px 20px;
+  }
+
+  .actions {
+    padding: 0 16px 20px;
+  }
+}

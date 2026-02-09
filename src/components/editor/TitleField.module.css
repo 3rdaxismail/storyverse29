@@ -1,0 +1,64 @@
+.titleField {
+  width: 100%;
+  padding: 8px 0;
+  font-family: var(--font-primary, 'Noto Sans', sans-serif);
+  font-weight: 500;
+  color: var(--color-text-primary, rgba(255, 255, 255, 1));
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  outline: none;
+  transition: all 250ms ease-in-out;
+}
+
+.titleField::placeholder {
+  color: var(--color-text-placeholder, rgba(140, 139, 145, 1));
+}
+
+/* Font sizes */
+.titleField.small {
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+}
+
+.titleField.medium {
+  font-size: var(--font-heading-size);
+  line-height: var(--font-ui-line-height);
+}
+
+.titleField.large {
+  font-size: var(--font-display-size);
+  line-height: var(--font-ui-line-height);
+}
+
+/* Editor States */
+.titleField.empty {
+  border-bottom-color: rgba(162, 162, 162, 0.3);
+  border-bottom-style: dashed;
+}
+
+.titleField.idle {
+  border-bottom-color: transparent;
+}
+
+.titleField.focused {
+  border-bottom-color: var(--color-brand-secondary, rgba(165, 183, 133, 1));
+}
+
+.titleField.typing {
+  border-bottom-color: var(--color-brand-primary, rgba(167, 186, 136, 1));
+}
+
+.titleField.selection {
+  border-bottom-color: var(--color-brand-secondary, rgba(165, 183, 133, 1));
+}
+
+.titleField.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.titleField.readOnly {
+  cursor: default;
+  border-bottom-color: transparent;
+}

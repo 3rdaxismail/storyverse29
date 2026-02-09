@@ -1,0 +1,24 @@
+# Storyverse - robots.txt
+# Allow search engines to index public content
+
+User-agent: *
+
+# Allow indexing of public content
+Allow: /story/
+Allow: /poem/
+Allow: /user/
+Allow: /auth/
+
+# Disallow indexing of private/editor areas
+Disallow: /editor/
+Disallow: /dashboard/
+Disallow: /home
+Disallow: /create
+Disallow: /profile
+Disallow: /inbox
+Disallow: /community
+Disallow: /trending
+Disallow: /character-profile/
+
+# Sitemap
+Sitemap: https://storyverse.co.in/sitemap.xml

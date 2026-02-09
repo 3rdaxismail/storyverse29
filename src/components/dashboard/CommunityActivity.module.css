@@ -1,0 +1,72 @@
+/**
+ * CommunityActivity Styles
+ * Compact single-row community message
+ */
+
+.communityCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.communityCard:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.content {
+  font-family: var(--font-family-primary, 'Noto Sans', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--color-text-white, rgba(245, 245, 245, 1));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.content.fadeIn {
+  opacity: 1;
+}
+
+.content.fadeOut {
+  opacity: 0;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .communityCard {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .content {
+    font-size: 0.75rem;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .communityCard {
+    padding: 16px 20px;
+    border-radius: 14px;
+  }
+
+  .content {
+    font-size: 0.875rem;
+  }
+}

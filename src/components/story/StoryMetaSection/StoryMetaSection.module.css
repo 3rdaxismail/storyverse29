@@ -1,0 +1,15 @@
+/**
+ * StoryMetaSection styles
+ * Matches Frame 33 from Figma - VERTICAL layout, 11px itemSpacing
+ * Position: top=108px, left=16px, width=380px
+ * 
+ * This component owns spacing and padding only.
+ * Child blocks must NOT define outer margins.
+ */
+
+.storyMetaSection {
+  display: flex;
+  flex-direction: column;
+  gap: 11px; /* exact itemSpacing from Figma */
+  width: 100%;
+}

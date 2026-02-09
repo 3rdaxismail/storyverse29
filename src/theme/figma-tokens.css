@@ -1,0 +1,148 @@
+/**
+ * CSS Custom Properties (CSS Variables) from Figma Design System
+ * Source: https://www.figma.com/design/hGphC3Bq9sx5G84wU3ZUKe/
+ * 
+ * Import this file in your index.css or main.tsx to use these variables
+ * throughout your application.
+ */
+
+:root {
+  /* ===== COLORS ===== */
+  
+  /* Brand */
+  --color-brand-main: rgba(167, 186, 136, 1);
+  
+  /* Backgrounds */
+  --color-app-background: rgba(22, 27, 34, 1);
+  --color-card-dark: rgba(15, 18, 22, 1);
+  --color-card-grey: rgba(43, 42, 48, 1);
+  --color-surface-base: rgba(22, 27, 34, 1);
+  
+  /* Text */
+  --color-text-white: rgba(245, 245, 245, 1);
+  --color-text-black: rgba(27, 28, 30, 1);
+  --color-text-content: rgba(245, 245, 245, 1);
+  --color-text-placeholder: rgba(146, 146, 147, 1);
+  --color-text-muted: rgba(162, 162, 162, 1);
+  
+  /* Status */
+  --color-status-success: rgba(67, 255, 146, 1);
+  --color-status-error: rgba(255, 108, 87, 1);
+  --color-status-notification: rgba(255, 0, 132, 1);
+  
+  /* Accents */
+  --color-accent-purple: rgba(167, 147, 255, 1);
+  --color-accent-blue: rgba(121, 165, 255, 1);
+  --color-accent-pink: rgba(255, 169, 251, 1);
+  --color-accent-yellow: rgba(255, 219, 75, 1);
+  
+  /* Icons */
+  --color-icon-primary: rgba(255, 255, 255, 1);
+  --color-icon-inactive: rgba(112, 112, 112, 1);
+  
+  /* Borders */
+  --color-border: rgba(47, 54, 64, 1);
+  
+  /* Neutrals */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-neutral: rgba(217, 217, 217, 1);
+  
+  /* ===== TYPOGRAPHY ===== */
+  
+  /* Font Family */
+  /* Multilingual font stack with proper fallbacks for different scripts */
+  --font-family-primary: 'Noto Sans', 'Noto Sans SC', 'Noto Sans TC', 'Noto Sans Devanagari', 'Noto Sans JP', 'Noto Sans KR', 'Noto Sans Arabic', 'Noto Sans Thai', sans-serif;
+  
+  /* Font Display - 36px SemiBold / 44px line height */
+  /* Use for: Landing hero, emotional statements */
+  --font-display-size: 36px;
+  --font-display-weight: 600;
+  --font-display-line-height: 44px;
+  --font-display-letter-spacing: 0;
+  
+  /* Font Heading - 24px SemiBold / 32px line height */
+  /* Use for: Page titles, dashboard headings */
+  --font-heading-size: 24px;
+  --font-heading-weight: 600;
+  --font-heading-line-height: 32px;
+  --font-heading-letter-spacing: 0;
+  
+  /* Font Subheading - 18px Medium / 26px line height */
+  /* Use for: Supporting lines, onboarding text */
+  --font-subheading-size: 18px;
+  --font-subheading-weight: 500;
+  --font-subheading-line-height: 26px;
+  --font-subheading-letter-spacing: 0;
+  
+  /* Font Body - 16px Regular / 26px line height */
+  /* Use for: Story writing, reader view, card descriptions */
+  --font-body-size: 16px;
+  --font-body-weight: 400;
+  --font-body-line-height: 26px;
+  --font-body-letter-spacing: 0;
+  
+  /* Font UI - 14px Medium / 20px line height */
+  /* Use for: Buttons, stats, inputs, navigation labels */
+  --font-ui-size: 14px;
+  --font-ui-weight: 500;
+  --font-ui-line-height: 20px;
+  --font-ui-letter-spacing: 0;
+  
+  /* Font Meta - 12px Regular / 18px line height */
+  /* Use for: Timestamps, helper text, captions */
+  --font-meta-size: 12px;
+  --font-meta-weight: 400;
+  --font-meta-line-height: 18px;
+  --font-meta-letter-spacing: 0;
+}
+
+/* ===== TYPOGRAPHY UTILITY CLASSES ===== */
+
+.font-display {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-display-size);
+  font-weight: var(--font-display-weight);
+  line-height: var(--font-display-line-height);
+  letter-spacing: var(--font-display-letter-spacing);
+}
+
+.font-heading {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-heading-size);
+  font-weight: var(--font-heading-weight);
+  line-height: var(--font-heading-line-height);
+  letter-spacing: var(--font-heading-letter-spacing);
+}
+
+.font-subheading {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-subheading-size);
+  font-weight: var(--font-subheading-weight);
+  line-height: var(--font-subheading-line-height);
+  letter-spacing: var(--font-subheading-letter-spacing);
+}
+
+.font-body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-body-weight);
+  line-height: var(--font-body-line-height);
+  letter-spacing: var(--font-body-letter-spacing);
+}
+
+.font-ui {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-ui-size);
+  font-weight: var(--font-ui-weight);
+  line-height: var(--font-ui-line-height);
+  letter-spacing: var(--font-ui-letter-spacing);
+}
+
+.font-meta {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-meta-size);
+  font-weight: var(--font-meta-weight);
+  line-height: var(--font-meta-line-height);
+  letter-spacing: var(--font-meta-letter-spacing);
+}

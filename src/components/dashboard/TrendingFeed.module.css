@@ -1,0 +1,88 @@
+/**
+ * TrendingFeed Styles
+ * SINGLE ROW - exactly like Community feed
+ * No lists, no multiple items, ONE ROW ONLY
+ */
+
+/* Single row container - matches Community feed exactly */
+.trendingRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.trendingRow:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.content {
+  font-family: var(--font-family-primary, 'Noto Sans', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--color-text-white, rgba(245, 245, 245, 1));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.content.fadeIn {
+  opacity: 1;
+}
+
+.content.fadeOut {
+  opacity: 0;
+}
+
+.typeTag {
+  font-family: var(--font-family-primary, 'Noto Sans', sans-serif);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-brand-main, rgba(167, 186, 136, 1));
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .trendingRow {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .content {
+    font-size: 0.75rem;
+  }
+
+  .typeTag {
+    font-size: 0.5625rem;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .trendingRow {
+    padding: 16px 20px;
+    border-radius: 14px;
+  }
+
+  .content {
+    font-size: 0.875rem;
+  }
+}

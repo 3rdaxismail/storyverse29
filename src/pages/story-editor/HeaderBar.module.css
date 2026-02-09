@@ -1,0 +1,75 @@
+.header {
+  /* Component-level spacing only - NO page positioning */
+  background: transparent;
+  position: relative;
+  padding-top: 32px;
+}
+
+.headerContent {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerLine {
+  width: 100%;
+  height: 1px;
+  display: block;
+  object-fit: cover;
+}
+
+/* left group */
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+}
+
+/* right group */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.messageButton {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.messageButton:hover {
+  opacity: 0.8;
+}
+
+.messageButton:active {
+  transform: scale(0.95);
+}
+
+.messageIcon {
+  width: 24px;
+  height: 20px;
+  display: block;
+}
+
+.avatar {
+  width: 31px;
+  height: 31px;
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.avatar:hover {
+  opacity: 0.8;
+}

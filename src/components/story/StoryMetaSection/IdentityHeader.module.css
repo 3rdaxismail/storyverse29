@@ -1,0 +1,77 @@
+/**
+ * IdentityHeader styles
+ * Matches StoryHeader (274:149) from Figma - h=20px
+ */
+
+.identityHeader {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.storyNameLabel {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1); /* green accent */
+}
+
+.shareIcon {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.shareIcon:hover {
+  opacity: 0.7;
+}
+
+.shareIcon:active {
+  opacity: 0.5;
+}
+
+.viewStoryButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: rgba(165, 183, 133, 0.8);
+  border-radius: 4px;
+  margin-left: auto;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.viewStoryButton:hover {
+  background: rgba(165, 183, 133, 0.1);
+  color: rgba(165, 183, 133, 1);
+}
+
+.viewStoryButton:active {
+  transform: scale(0.98);
+}
+
+.viewStoryButton svg {
+  width: 12px;
+  height: 12px;
+}
+
+.privacyDropdownContainer {
+  flex-shrink: 0;
+  z-index: 2;
+}

@@ -1,0 +1,183 @@
+/**
+ * ChapterTextEditor styles
+ * Mobile-first, state-aware text editor
+ */
+
+.chapterTextEditor {
+  position: relative;
+  width: 100%;
+  background: rgba(28, 28, 30, 1);
+  border: 1px solid rgba(60, 60, 65, 1);
+  border-radius: 8px;
+  padding: 10px;
+  transition: border-color 0.2s, max-height 0.3s ease;
+  overflow: hidden;
+}
+
+/* Expand Chapter Button */
+.expandButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 6px 0;
+  margin-bottom: 8px;
+  font-family: var(--font-primary);
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.expandButton.hasContent {
+  color: var(--status-success);
+}
+
+.expandButton.hasContent:hover {
+  color: var(--status-success);
+  transform: translateX(2px);
+}
+
+.expandButton.noContent {
+  color: var(--brand-primary);
+}
+
+.expandButton.noContent:hover {
+  color: var(--brand-primary);
+  transform: translateX(2px);
+}
+
+.expandButton:active {
+  transform: scale(0.98);
+}
+
+.chevronDown {
+  transition: transform 0.2s;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+.expandLabel {
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+}
+
+.chapterTextEditor.active {
+  border-color: rgba(165, 183, 133, 1);
+  box-shadow: 0 0 0 1px rgba(165, 183, 133, 0.3);
+}
+
+.chapterTextEditor.error {
+  border-color: rgba(255, 59, 48, 1);
+}
+
+.chapterTextEditor.offline {
+  border-color: rgba(255, 149, 0, 1);
+}
+
+/* Collapsed/Expanded states */
+.chapterTextEditor.collapsed {
+  max-height: 200px;
+}
+
+.chapterTextEditor.collapsed .textarea {
+  max-height: calc(1.6em * 5);
+  overflow: hidden;
+}
+
+.chapterTextEditor.expanded {
+  max-height: none;
+}
+
+.chapterTextEditor.expanded .textarea {
+  max-height: none;
+  overflow: visible;
+}
+
+.textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 1);
+  font-family: var(--font-primary);
+  font-weight: 300;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  resize: none;
+  min-height: 100px;
+  transition: max-height 0.3s ease;
+}
+
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* State Indicator */
+.stateIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(60, 60, 65, 0.5);
+}
+
+.stateIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(165, 183, 133, 1);
+}
+
+.chapterTextEditor.error .stateIcon {
+  color: rgba(255, 59, 48, 1);
+}
+
+.chapterTextEditor.offline .stateIcon {
+  color: rgba(255, 149, 0, 1);
+}
+
+.stateLabel {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  color: rgba(165, 183, 133, 1);
+}
+
+.chapterTextEditor.error .stateLabel {
+  color: rgba(255, 59, 48, 1);
+}
+
+.chapterTextEditor.offline .stateLabel {
+  color: rgba(255, 149, 0, 1);
+}
+
+/* Spin animation for syncing icon */
+.spinIcon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 520px) {
+  .chapterTextEditor {
+    padding: 16px;
+  }
+
+  .textarea {
+    font-size: var(--font-ui-size);
+  }
+}

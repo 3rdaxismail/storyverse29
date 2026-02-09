@@ -1,0 +1,116 @@
+/**
+ * StatsCards Styles
+ * Side-by-side cards with icon on right - mobile optimized
+ */
+
+.statsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  transition: none;
+  box-shadow: none;
+  position: relative;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.statIcon {
+  width: 20px;
+  height: 20px;
+  opacity: 1;
+  display: block;
+  filter: brightness(1);
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.statValue {
+  font-family: var(--font-family-primary, 'Noto Sans', sans-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-white, rgba(245, 245, 245, 1));
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  font-family: var(--font-family-primary, 'Noto Sans', sans-serif);
+  font-size: 0.625rem;
+  color: var(--color-text-muted, rgba(162, 162, 162, 1));
+  margin: 4px 0 0 0;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .statsContainer {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .statCard {
+    padding: 16px;
+  }
+
+  .statValue {
+    font-size: 1.75rem;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .statsContainer {
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .statCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: none;
+    border-radius: 20px;
+    padding: 28px 24px;
+    transition: none;
+    box-shadow: none;
+  }
+
+  .statCard:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .statContent {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .statIcon {
+    width: 24px;
+    height: 24px;
+    top: 28px;
+    right: 24px;
+  }
+
+  .statValue {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    margin: 0 0 6px 0;
+  }
+}
+

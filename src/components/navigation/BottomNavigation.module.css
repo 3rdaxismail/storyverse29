@@ -1,0 +1,173 @@
+/**
+ * BottomNavigation styles
+ * Mobile-first floating bottom navigation
+ * Matches Figma design specifications
+ */
+
+.footerContainer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 325px;
+  max-width: calc(100vw - 32px);
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 100;
+  pointer-events: none;
+}
+
+.navigation {
+  width: 100%;
+  height: 51px;
+  background: rgba(0, 0, 0, 1);
+  border-radius: 52px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 8px;
+  pointer-events: auto;
+}
+
+/* Individual nav item (Home, Folder, Community, Trending) */
+.navItem {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+  opacity: 0.6;
+}
+
+.navItem:hover {
+  opacity: 0.8;
+}
+
+.navItem.active {
+  opacity: 1;
+}
+
+.navItem img {
+  display: block;
+}
+
+/* Write button - Center CTA with circular background */
+.navItemWrite {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.navItemWrite:hover {
+  transform: scale(1.08) translateY(-4px) rotateX(-8deg);
+}
+
+.navItemWrite:active {
+  transform: scale(0.95) rotateX(5deg);
+}
+
+.writeButton {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.navItemWrite:hover .writeButton {
+  box-shadow: 
+    0 8px 20px rgba(255, 255, 255, 0.5),
+    0 0 30px rgba(255, 255, 255, 0.3);
+  filter: brightness(1.3) saturate(1.4);
+}
+
+.navItemWrite.active .writeButton {
+  box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.writeButton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2) 40%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.navItemWrite:hover .writeButton::after {
+  opacity: 1;
+}
+
+.writeButton::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 20%, transparent 50%);
+  transform: rotate(45deg);
+  transition: top 0.4s ease-out;
+  pointer-events: none;
+  filter: brightness(1.1);
+}
+
+.navItemWrite:hover .writeButton::before {
+  top: 150%;
+}
+
+.writeButton img {
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .footerContainer {
+    width: 325px;
+    padding-bottom: 24px;
+  }
+}
+
+/* Ensure footer doesn't overflow on very small screens */
+@media (max-width: 360px) {
+  .footerContainer {
+    width: 300px;
+  }
+  
+  .navigation {
+    height: 48px;
+    padding: 0 4px;
+  }
+  
+  .writeButton {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .writeButton img {
+    width: 36px;
+    height: 36px;
+  }
+}

@@ -1,0 +1,35 @@
+/**
+ * SectionCard - Reusable section wrapper
+ */
+.sectionCard {
+  background: rgba(20, 20, 22, 1);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-primary);
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.helperIcon {
+  color: var(--text-tertiary);
+  cursor: help;
+}
+
+.content {
+  /* No padding, let child components control their own spacing */
+}

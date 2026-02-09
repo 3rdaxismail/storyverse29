@@ -1,0 +1,96 @@
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.textarea {
+  width: 100%;
+  padding: 16px;
+  font-family: var(--font-primary, 'Noto Sans', sans-serif);
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  line-height: var(--font-ui-line-height);
+  color: var(--color-text-primary, rgba(255, 255, 255, 1));
+  background-color: var(--color-bg-tertiary, rgba(22, 27, 34, 1));
+  border: none;
+  border-radius: 4px;
+  resize: vertical;
+  outline: none;
+  transition: all 250ms ease-in-out;
+}
+
+.textarea::placeholder {
+  color: var(--color-text-placeholder, rgba(140, 139, 145, 1));
+}
+
+/* Editor States */
+.textarea.empty {
+  border: 1px dashed var(--color-text-tertiary, rgba(162, 162, 162, 1));
+}
+
+.textarea.idle {
+  border: 1px solid transparent;
+}
+
+.textarea.focused {
+  border: 1px solid var(--color-brand-secondary, rgba(165, 183, 133, 1));
+  box-shadow: 0 0 0 2px rgba(165, 183, 133, 0.1);
+}
+
+.textarea.typing {
+  border: 1px solid var(--color-brand-primary, rgba(167, 186, 136, 1));
+  box-shadow: 0 0 0 2px rgba(167, 186, 136, 0.15);
+}
+
+.textarea.selection {
+  border: 1px solid var(--color-brand-secondary, rgba(165, 183, 133, 1));
+}
+
+.textarea.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--color-bg-secondary, rgba(15, 18, 22, 1));
+}
+
+.textarea.readOnly {
+  cursor: default;
+  background-color: var(--color-bg-secondary, rgba(15, 18, 22, 1));
+}
+
+.statusIndicator {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background-color: rgba(22, 27, 34, 0.95);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.statusText {
+  font-size: var(--font-meta-size);
+  font-weight: 500;
+  color: var(--color-text-tertiary, rgba(162, 162, 162, 1));
+}
+
+/* Scrollbar styling */
+.textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.textarea::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary, rgba(15, 18, 22, 1));
+  border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted, rgba(112, 112, 112, 1));
+  border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary, rgba(162, 162, 162, 1));
+}

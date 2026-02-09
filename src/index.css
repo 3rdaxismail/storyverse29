@@ -1,0 +1,134 @@
+/**
+ * STORYVERSE - GLOBAL STYLES
+ * 
+ * ARCHITECTURE:
+ * 1. Import design tokens from Figma (source of truth)
+ * 2. Import legacy design tokens
+ * 3. Import typography utilities
+ * 4. Set global resets and defaults
+ * 
+ * RULES:
+ * - Prefer Figma tokens (--color-*, --font-*) for new components
+ * - All colors MUST use CSS variables
+ * - All typography MUST use utilities
+ * - NO hardcoded design values
+ */
+
+/* Import Figma design system tokens (source of truth) */
+@import './theme/figma-tokens.css';
+
+/* Import legacy design system (backwards compatibility) */
+@import './theme/tokens.css';
+@import './theme/typography.css';
+
+/* ================================================
+   GLOBAL RESETS
+   ================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================================================
+   ROOT CONFIGURATION
+   ================================================ */
+html {
+  font-size: var(--font-body-size);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-base);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* ================================================
+   ROOT CONTAINER
+   ================================================ */
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ================================================
+   BUTTON DEFAULTS
+   ================================================ */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ================================================
+   INPUT DEFAULTS
+   ================================================ */
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+/* ================================================
+   SCROLLBAR STYLING
+   ================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-hover);
+}
+
+/* ================================================
+   SELECTION STYLING
+   ================================================ */
+::selection {
+  background-color: var(--brand-primary);
+  color: var(--text-dark);
+}
+
+::-moz-selection {
+  background-color: var(--brand-primary);
+  color: var(--text-dark);
+}

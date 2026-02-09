@@ -1,0 +1,301 @@
+/* Chapter Locations - Location selector for chapter-level assignments */
+
+.chapterLocations {
+  position: relative;
+  width: 100%;
+}
+
+.locationList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Location Chip - Text-only pill style */
+.locationChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--color-bg-secondary, #1a1a1a);
+  border: none;
+  border-radius: 10px;
+  font-size: var(--font-ui-size);
+  color: var(--color-text-primary, #fff);
+  transition: all 0.2s ease;
+}
+
+.locationChip:hover {
+  background: rgba(167, 186, 136, 0.1);
+}
+
+.locationText {
+  white-space: nowrap;
+}
+
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--color-text-secondary, #999);
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.removeButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary, #fff);
+}
+
+/* Add Button */
+.addButtonWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 2px dashed rgba(165, 183, 133, 0.5);
+  border-radius: 50%;
+  color: rgba(165, 183, 133, 1);
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  vertical-align: middle;
+}
+
+.addButton:hover {
+  opacity: 0.8;
+}
+
+/* Floating Card */
+.floatingCard {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 100;
+  min-width: 320px;
+  padding: 16px;
+  background: var(--color-bg-secondary, #1a1a1a);
+  border: 1px solid var(--color-border, #333);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.cardTitle {
+  margin: 0 0 16px 0;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: var(--color-text-primary, #fff);
+}
+
+/* Quick Select Section */
+.quickSelect {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border, #333);
+}
+
+.quickSelectLabel {
+  margin-bottom: 8px;
+  font-size: var(--font-ui-size);
+  color: var(--color-text-secondary, #999);
+}
+
+.quickSelectList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.quickSelectChip {
+  padding: 4px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  font-size: var(--font-ui-size);
+  color: var(--color-text-primary, #fff);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quickSelectChip:hover {
+  background: rgba(167, 186, 136, 0.1);
+}
+
+.quickSelectChipSelected {
+  background: rgba(167, 186, 136, 0.2);
+  font-weight: 500;
+}
+
+.addSelectedButton {
+  margin-top: 12px;
+  width: 100%;
+  padding: 8px 16px;
+  background: var(--brand-primary, #a7ba88);
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addSelectedButton:hover:not(:disabled) {
+  background: var(--brand-secondary, #a5b785);
+}
+
+.addSelectedButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.divider {
+  margin-top: 12px;
+  font-size: var(--font-ui-size);
+  text-align: center;
+  color: var(--color-text-tertiary, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Form Group */
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: var(--color-text-secondary, #999);
+}
+
+/* Radio Group */
+.radioGroup {
+  display: flex;
+  gap: 16px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-ui-size);
+  color: var(--color-text-primary, #fff);
+  cursor: pointer;
+}
+
+.radioInput {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--brand-primary, #a7ba88);
+}
+
+/* Text Input */
+.textInput {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #0a0a0a);
+  border: 1px solid var(--color-border, #333);
+  border-radius: 8px;
+  font-size: var(--font-ui-size);
+  color: var(--color-text-primary, #fff);
+  transition: all 0.2s ease;
+}
+
+.textInput:focus {
+  outline: none;
+  border-color: var(--brand-primary, #a7ba88);
+  box-shadow: 0 0 0 3px rgba(167, 186, 136, 0.1);
+}
+
+.textInput::placeholder {
+  color: var(--color-text-tertiary, #666);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--color-border, #333);
+  border-radius: 8px;
+  font-size: var(--font-ui-size);
+  color: var(--color-text-secondary, #999);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+  border-color: var(--color-border-hover, #555);
+  color: var(--color-text-primary, #fff);
+}
+
+.addLocationButton {
+  padding: 8px 16px;
+  background: var(--brand-primary, #a7ba88);
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addLocationButton:hover:not(:disabled) {
+  background: var(--brand-secondary, #a5b785);
+}
+
+.addLocationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.createLocationButton {
+  padding: 8px 16px;
+  background: var(--brand-primary, #a7ba88);
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.createLocationButton:hover:not(:disabled) {
+  background: var(--brand-secondary, #a5b785);
+}
+
+.createLocationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

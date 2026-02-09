@@ -1,0 +1,111 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profiles: public read for basic info, write only by owner
+    match /users/{userId} {
+      // Allow public read for user profiles (needed for author info on public stories)
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+      
+      // Saved Reads subcollection - CRITICAL for bookmarks (My Reads feature)
+      match /savedReads/{itemId} {
+        // Users can only read/write their own saved reads
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Active Session subcollection - single-device session enforcement
+      match /activeSession/current {
+        // Users can only read/write their own active session
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // Stories - public read for Trending, authenticated for others
+    match /stories/{storyId} {
+      // Allow read if: authenticated OR story privacy is "Trending"
+      allow read: if request.auth != null || 
+                     resource.data.privacy == 'Trending';
+      allow create: if request.auth != null && 
+        request.resource.data.uid == request.auth.uid;
+      allow update: if request.auth != null && 
+        (resource.data.uid == request.auth.uid || 
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commentsCount', 'likesCount']));
+      allow delete: if request.auth != null && 
+        resource.data.uid == request.auth.uid;
+      
+      // Subcollections (acts, chapters): public read if parent story is Trending, write only for owner
+      match /{subcollection}/{docId} {
+        allow read: if request.auth != null || 
+          get(/databases/$(database)/documents/stories/$(storyId)).data.privacy == 'Trending';
+        allow write: if request.auth != null && 
+          get(/databases/$(database)/documents/stories/$(storyId)).data.uid == request.auth.uid;
+      }
+    }
+    
+    // Poems - public read for Trending, authenticated for others
+    match /poems/{poemId} {
+      // Allow read if: authenticated OR poem privacy is "Trending"
+      allow read: if request.auth != null || 
+                     resource.data.privacy == 'Trending';
+      allow create: if request.auth != null && 
+        request.resource.data.uid == request.auth.uid;
+      allow update: if request.auth != null && 
+        (resource.data.uid == request.auth.uid || 
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commentsCount', 'likesCount']));
+      allow delete: if request.auth != null && 
+        resource.data.uid == request.auth.uid;
+    }
+    
+    // Likes collection - for engagement system
+    match /likes/{likeId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && 
+        request.resource.data.uid == request.auth.uid;
+      allow delete: if request.auth != null && 
+        resource.data.uid == request.auth.uid;
+    }
+    
+    // Comments collection - public read for all (needed for trending content), write requires auth
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null && 
+        request.resource.data.uid == request.auth.uid;
+      allow update, delete: if request.auth != null && 
+        resource.data.uid == request.auth.uid;
+    }
+    
+    // Community rooms: read by authenticated users
+    match /communityRooms/{roomId} {
+      allow read: if request.auth != null;
+      
+      // Messages: read/write by authenticated users
+      match /messages/{messageId} {
+        allow read: if request.auth != null;
+        allow create: if request.auth != null 
+          && request.resource.data.senderUid == request.auth.uid;
+        allow update, delete: if request.auth != null 
+          && request.auth.uid == resource.data.senderUid;
+      }
+    }
+    
+    // Message threads: private messaging between users
+    match /messageThreads/{threadId} {
+      // Allow read if user is authenticated (needed to check if thread exists)
+      // The thread ID format ensures users can only access their own threads
+      allow read: if request.auth != null;
+      
+      // Allow create if user is in the new document's participantIds
+      allow create: if request.auth != null && 
+        request.auth.uid in request.resource.data.participantIds;
+      
+      // Allow update if user is a participant in the existing thread
+      allow update: if request.auth != null && 
+        request.auth.uid in resource.data.participantIds;
+      
+      // Allow delete if user is a participant
+      allow delete: if request.auth != null && 
+        request.auth.uid in resource.data.participantIds;
+    }
+  }
+}

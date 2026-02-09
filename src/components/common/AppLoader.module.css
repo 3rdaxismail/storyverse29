@@ -1,0 +1,109 @@
+/**
+ * STORYVERSE APP LOADER
+ * 
+ * Clean, minimal loading animation using SVG mask + CSS gradient animation.
+ * No external libraries, respects user motion preferences.
+ */
+
+.loaderContainer {
+  position: relative;
+  display: inline-block;
+  animation: fadeIn 0.8s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animated gradient background */
+.gradientBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Diagonal gradient using Storyverse secondary colors */
+  background: linear-gradient(
+    135deg,
+    #79A5FF 0%,      /* Blue */
+    #A793FF 25%,     /* Violet */
+    #FFA9FB 50%,     /* Pink */
+    #43FF92 75%,     /* Green */
+    #FFDB4B 100%     /* Yellow */
+  );
+  
+  /* Extend gradient to allow smooth animation */
+  background-size: 200% 200%;
+  
+  /* Animate gradient position diagonally */
+  animation: gradientMove 6s ease-in-out infinite;
+  
+  /* Clip gradient to logo shape */
+  mask-image: url('../../assets/Logo mask.svg');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  
+  /* Webkit prefix for Safari */
+  -webkit-mask-image: url('../../assets/Logo mask.svg');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+/* Diagonal gradient movement */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Logo SVG as mask (invisible) */
+.logoMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .loaderContainer {
+    animation: none;
+    opacity: 1;
+  }
+  
+  .gradientBackground {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
+/* Screen reader only class - hides text visually but keeps it accessible */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

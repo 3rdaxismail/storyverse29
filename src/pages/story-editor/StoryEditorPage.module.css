@@ -1,0 +1,27 @@
+/* Responsive width constraint for page content */
+.content {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .content {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content {
+    max-width: 980px;
+  }
+}

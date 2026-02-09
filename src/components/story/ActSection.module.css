@@ -1,0 +1,127 @@
+/**
+ * ActSection styles
+ * Mobile-first act container
+ */
+
+.actSection {
+  width: 100%;
+}
+
+.actHeader {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.actTitle {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  flex: 1;
+  min-width: 0;
+}
+
+.actTitle:hover {
+  opacity: 0.8;
+}
+
+.deleteButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(165, 183, 133, 0.5);
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.deleteButton:hover {
+  color: rgba(255, 107, 107, 0.9);
+}
+
+.deleteButton:active {
+  color: rgba(255, 107, 107, 1);
+}
+
+.actTitleInput {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(165, 183, 133, 1);
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 400px;
+}
+
+.chaptersContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.addChapterButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 10px;
+  min-width: 150px;
+  background: transparent;
+  border: 2px dashed rgba(165, 183, 133, 0.3);
+  border-radius: 8px;
+  color: rgba(165, 183, 133, 1);
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0 auto;
+}
+
+.addChapterButton:hover {
+  border-color: rgba(165, 183, 133, 0.6);
+  background: rgba(165, 183, 133, 0.05);
+}
+
+.addChapterButton:active {
+  border-color: rgba(165, 183, 133, 1);
+  background: rgba(165, 183, 133, 0.1);
+}
+
+/* Responsive adjustments */
+@media (min-width: 520px) {
+  .actHeader {
+    margin-bottom: 8px;
+  }
+
+  .actTitle {
+    font-size: var(--font-ui-size);
+  }
+
+  .chaptersContainer {
+    gap: 20px;
+  }
+}

@@ -1,0 +1,356 @@
+/**
+ * LocationSection styles
+ * Compact text-based chips with expand/collapse behavior
+ * Smaller than character avatars
+ */
+
+.locationSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Header with expand/collapse */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1); /* green accent */
+  margin: 0;
+  padding: 0;
+}
+
+.expandButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+/* Secondary Green when hidden content exists */
+.expandButton.hasContent {
+  color: var(--status-success);
+}
+
+.expandButton.hasContent:hover {
+  color: var(--status-success);
+  transform: scale(1.1);
+}
+
+/* Brand Anchor when no hidden content */
+.expandButton.noContent {
+  color: var(--brand-primary);
+}
+
+.expandButton.noContent:hover {
+  color: var(--brand-primary);
+  transform: scale(1.1);
+}
+
+.expandButton:active {
+  transform: scale(0.95);
+}
+
+.chevronDown {
+  transition: transform 0.2s;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+/* Location chips container */
+.locationList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+  transition: max-height 0.3s ease-out;
+  overflow: hidden;
+}
+
+.locationList.collapsed {
+  max-height: 24px;
+}
+
+.locationList.expanded {
+  max-height: 500px;
+}
+
+/* Empty state */
+.emptyText {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  padding: 4px 0;
+}
+
+/* Location Chip (text-based pill) */
+.locationChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(43, 42, 48, 0.6);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-primary);
+  white-space: nowrap;
+}
+
+.locationChip:hover {
+  background: rgba(43, 42, 48, 0.8);
+}
+
+.locationChip:active {
+  background: rgba(43, 42, 48, 1);
+}
+
+.locationType {
+  font-weight: var(--font-ui-weight);
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(165, 183, 133, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.locationName {
+  font-weight: var(--font-ui-weight);
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Add Location Chip */
+.addChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: 1px dashed rgba(165, 183, 133, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(165, 183, 133, 0.7);
+  flex-shrink: 0;
+}
+
+.addChip:hover {
+  background: rgba(165, 183, 133, 0.1);
+  border-color: rgba(165, 183, 133, 0.6);
+  color: rgba(165, 183, 133, 1);
+}
+
+.addChip:active {
+  background: rgba(165, 183, 133, 0.15);
+  border-color: rgba(165, 183, 133, 0.8);
+}
+
+/* Floating Card Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* Floating Add Location Card */
+.floatingCard {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(26, 26, 26, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  z-index: 1001;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.cardTitle {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  margin: 0 0 20px 0;
+}
+
+.actionList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.actionButton {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(43, 42, 48, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.actionButton:hover {
+  background: rgba(53, 52, 58, 1);
+  border-color: rgba(165, 183, 133, 0.3);
+}
+
+.actionButton:active {
+  background: rgba(63, 62, 68, 1);
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: rgba(165, 183, 133, 1);
+  margin-bottom: 8px;
+}
+
+/* Radio Group */
+.radioGroup {
+  display: flex;
+  gap: 16px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.radioInput {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.radioText {
+  user-select: none;
+}
+
+/* Text Input */
+.textInput {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  color: rgba(255, 255, 255, 1);
+  background: rgba(43, 42, 48, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.textInput:focus {
+  border-color: rgba(165, 183, 133, 0.5);
+}
+
+.textInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Confirmation Message */
+.confirmMessage {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 16px 0 0 0;
+  padding: 0;
+}
+
+/* Card Actions */
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cancelButton {
+  padding: 10px 20px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.submitButton {
+  padding: 10px 20px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: var(--font-ui-size);
+  font-weight: 500;
+  color: rgba(26, 26, 26, 1);
+  background: rgba(165, 183, 133, 1);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submitButton:hover {
+  background: rgba(175, 193, 143, 1);
+}
+
+.submitButton:active {
+  background: rgba(155, 173, 123, 1);
+}

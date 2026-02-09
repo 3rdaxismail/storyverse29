@@ -1,0 +1,217 @@
+/**
+ * ChapterCard styles
+ * Mobile-first chapter container
+ */
+
+.chapterCard {
+  background: rgba(20, 20, 22, 1);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 12px;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.chapterCard:focus-within,
+.chapterCard.expanded {
+  border-color: rgba(165, 183, 133, 1); /* Brand primary color */
+}
+
+.chapterHeader {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.chapterTitle {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 1);
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.deleteButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(165, 183, 133, 0.5);
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.deleteButton:hover {
+  color: rgba(255, 107, 107, 0.9);
+}
+
+.deleteButton:active {
+  color: rgba(255, 107, 107, 1);
+}
+
+.chapterNumber {
+  color: rgba(165, 183, 133, 1);
+}
+
+.chapterName {
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.chapterName:hover {
+  opacity: 0.7;
+}
+
+.chapterName .placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.chapterTitleInput {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: var(--font-ui-size);
+  line-height: var(--font-ui-line-height);
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(165, 183, 133, 0.5);
+  outline: none;
+  padding: 0;
+  margin-left: 4px;
+  width: auto;
+  min-width: 100px;
+}
+
+.chapterSection {
+  margin-bottom: 16px;
+}
+
+.chapterSection:last-child {
+  margin-bottom: 0;
+}
+
+.contentHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.sectionLabel {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-ui-size);
+  font-weight: var(--font-meta-weight);
+  line-height: var(--font-meta-line-height);
+  letter-spacing: var(--font-meta-letter-spacing);
+  color: rgba(165, 183, 133, 0.7);
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+
+.textEditorHeader {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.expandButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  min-height: 32px;
+}
+
+.expandButton.hasContent {
+  color: var(--status-success);
+}
+
+.expandButton.hasContent:hover {
+  color: var(--status-success);
+  transform: translateX(2px);
+}
+
+.expandButton.noContent {
+  color: var(--brand-primary);
+}
+
+.expandButton.noContent:hover {
+  color: var(--brand-primary);
+  transform: translateX(2px);
+}
+
+.expandButton:active {
+  transform: scale(0.98);
+}
+
+.chevronDown {
+  transition: transform 0.2s;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+.expandLabel {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-ui-size);
+  font-weight: var(--font-meta-weight);
+  line-height: var(--font-meta-line-height);
+  letter-spacing: var(--font-meta-letter-spacing);
+  color: inherit;
+}
+
+.expandIcon {
+  transition: transform 0.2s;
+}
+
+.expandIconRotated {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+/* Responsive adjustments */
+@media (min-width: 520px) {
+  .chapterCard {
+    padding: 20px;
+  }
+
+  .chapterHeader {
+    margin-bottom: 16px;
+  }
+
+  .chapterTitle {
+    font-size: var(--font-ui-size);
+  }
+
+  .chapterTitleInput {
+    font-size: var(--font-ui-size);
+  }
+
+  .contentHeader {
+    margin-bottom: 12px;
+  }
+
+  .chapterSection {
+    margin-bottom: 16px;
+  }
+}
