@@ -1239,8 +1239,8 @@ class WritingSessionEngine {
       // RECORD WRITING ACTIVITY for poem
       // user is already declared earlier in this function
       if (user) {
-        await recordWritingActivity(user.uid, wordCount);
-        console.log('[SAVE POEM META] 📊 Activity recorded:', wordCount, 'words');
+        await recordWritingActivity(user.uid, wordCount, this.poemId);
+        console.log('[SAVE POEM META] 📊 Activity recorded:', wordCount, 'words from poem', this.poemId);
       }
     } catch (error) {
       console.error('[SAVE POEM META] ❌ Save failed:', error);
@@ -1315,8 +1315,13 @@ class WritingSessionEngine {
         // Activity is recorded when text is saved to Firestore (autosave or manual)
         const user = auth.currentUser;
         if (user) {
-          await recordWritingActivity(user.uid, content.wordCount);
-          console.log('[SAVE CHAPTER CONTENT] 📊 Activity recorded:', content.wordCount, 'words');
+          // Calculate total word count from all chapters to track cumulative output
+          let totalWords = 0;
+          this.chapterContents.forEach(ch => {
+            totalWords += ch.wordCount || 0;
+          });
+          await recordWritingActivity(user.uid, totalWords, this.storyId);
+          console.log('[SAVE CHAPTER CONTENT] 📊 Activity recorded:', totalWords, 'words from', this.storyId);
         }
       } else {
         console.warn('[SAVE CHAPTER CONTENT] ⚠️ Chapter content not found:', chapterId);

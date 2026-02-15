@@ -40,10 +40,10 @@ import { db } from '../config';
 
 export interface WritingActivityDay {
   date: string; // YYYY-MM-DD
-  wordsWritten: number;
-  sessions: number;
-  firstWriteAt: Timestamp;
-  lastWriteAt: Timestamp;
+  wordCount: number; // Total words written on this day
+  storyIds: string[]; // Stories edited on this day
+  createdAt: Timestamp; // When this activity document was first created
+  updatedAt?: Timestamp; // When activity was last updated
 }
 
 /**
@@ -59,26 +59,37 @@ export function formatDateKey(date: Date): string {
 /**
  * Record writing activity for today.
  * 
+ * This is the PRIMARY way activity is tracked.
+ * Creates or updates the activity document for today.
+ * 
  * Called when:
- * - User saves text via editor autosave
- * - User manually saves
+ * - Content length changes (editor detects typing)
+ * - User saves text (manual or autosave)
  * - Text content is committed to Firestore
  * 
+ * BEHAVIOR:
+ * - If today's document doesn't exist: create it
+ * - If today's document exists: update wordCount and add storyId if new
+ * - NEVER delete past documents
+ * - NEVER overwrite historical data
+ * 
  * @param uid User ID
- * @param wordsDelta Number of words written in this session (optional, defaults to 1 to track activity)
+ * @param wordCount Total words in the content being saved
+ * @param storyId Optional: which story/poem this is from
  */
 export async function recordWritingActivity(
   uid: string,
-  wordsDelta: number = 1
+  wordCount: number = 1,
+  storyId?: string
 ): Promise<void> {
-  if (!uid || wordsDelta < 0) {
-    console.warn('[ACTIVITY] Invalid input to recordWritingActivity:', { uid, wordsDelta });
+  if (!uid) {
+    console.warn('[ACTIVITY] Invalid uid to recordWritingActivity');
     return;
   }
 
   // MINIMUM THRESHOLD: Only record if at least 1 word
-  if (wordsDelta < 1) {
-    console.log('[ACTIVITY] Ignoring sub-threshold activity (wordsDelta < 1)');
+  if (wordCount < 1) {
+    console.log('[ACTIVITY] Ignoring sub-threshold activity (wordCount < 1)');
     return;
   }
 
@@ -91,27 +102,33 @@ export async function recordWritingActivity(
     const activityDoc = await getDoc(activityRef);
 
     if (!activityDoc.exists()) {
-      // First write today - create new document
-      console.log('[ACTIVITY] 🆕 Creating new activity document for', dateKey);
+      // First write today - CREATE new document
+      console.log('[ACTIVITY] 🆕 Creating activity for', dateKey, 'with', wordCount, 'words');
+      
+      const storyIds = storyId ? [storyId] : [];
       await setDoc(activityRef, {
         date: dateKey,
-        wordsWritten: wordsDelta,
-        sessions: 1,
-        firstWriteAt: now,
-        lastWriteAt: now,
+        wordCount: wordCount,
+        storyIds: storyIds,
+        createdAt: now, // First write timestamp (NEVER changes)
+        updatedAt: now,
       });
     } else {
-      // Activity exists for today - increment
+      // Activity exists for today - UPDATE only wordCount and storyIds
       const current = activityDoc.data() as WritingActivityDay;
-      console.log('[ACTIVITY] 📝 Incrementing activity for', dateKey, '(was:', current.wordsWritten, ')');
+      const currentWordCount = current.wordCount || 0;
+      const currentStoryIds = Array.from(new Set([...(current.storyIds || []), ...(storyId ? [storyId] : [])]))
+      
+      console.log('[ACTIVITY] 📝 Updating activity for', dateKey, 
+        'wordCount:', currentWordCount, '→', wordCount);
       
       await setDoc(
         activityRef,
         {
-          wordsWritten: (current.wordsWritten || 0) + wordsDelta,
-          sessions: (current.sessions || 1) + 1,
-          lastWriteAt: now,
-          // Keep firstWriteAt unchanged
+          wordCount: wordCount, // Set to current total (not delta)
+          storyIds: currentStoryIds,
+          updatedAt: now,
+          // IMPORTANT: Do NOT touch createdAt - it's immutable
         },
         { merge: true }
       );
