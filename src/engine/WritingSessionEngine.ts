@@ -48,6 +48,7 @@ import {
   saveChapterContent,
   type Story
 } from '../firebase/services/storiesService';
+import { recordWritingActivity } from '../firebase/services/writingActivityService';
 import { auth } from '../firebase/config';
 import { deviceSessionManager } from '../services/DeviceSessionManager';
 
@@ -1234,6 +1235,13 @@ class WritingSessionEngine {
         await createPoem(this.poemId, poemData);
         console.log('[SAVE POEM META] ✅ New poem created successfully');
       }
+
+      // RECORD WRITING ACTIVITY for poem
+      // user is already declared earlier in this function
+      if (user) {
+        await recordWritingActivity(user.uid, wordCount);
+        console.log('[SAVE POEM META] 📊 Activity recorded:', wordCount, 'words');
+      }
     } catch (error) {
       console.error('[SAVE POEM META] ❌ Save failed:', error);
     }
@@ -1302,6 +1310,14 @@ class WritingSessionEngine {
           wordCount: content.wordCount,
           charCount: content.charCount 
         });
+
+        // RECORD WRITING ACTIVITY
+        // Activity is recorded when text is saved to Firestore (autosave or manual)
+        const user = auth.currentUser;
+        if (user) {
+          await recordWritingActivity(user.uid, content.wordCount);
+          console.log('[SAVE CHAPTER CONTENT] 📊 Activity recorded:', content.wordCount, 'words');
+        }
       } else {
         console.warn('[SAVE CHAPTER CONTENT] ⚠️ Chapter content not found:', chapterId);
       }
