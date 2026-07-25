@@ -17,6 +17,7 @@ app.get('/api/health', (_req, res) => {
   res.status(200).json({
     ok: true,
     provider: 'gemini',
+    model: process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash',
     hasKey: Boolean(process.env.GEMINI_API_KEY),
   });
 });

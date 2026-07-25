@@ -1,6 +1,8 @@
+import { AI_CONFIG } from '../../config/aiConfig';
+
 /**
  * Gemini AI Tension Scoring
- * Uses gemini-1.5-flash to analyze text for emotional tension
+ * Uses the centrally configured Gemini model to analyze text for emotional tension
  */
 
 /**
@@ -51,7 +53,7 @@ TEXT:
 ${truncatedText}`;
 
     // Call Gemini API
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${AI_CONFIG.model}:generateContent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

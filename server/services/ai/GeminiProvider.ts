@@ -19,7 +19,7 @@ export class GeminiProvider implements AIProvider {
 
   private readonly apiKey: string;
 
-  constructor(apiKey: string, modelName = 'gemini-1.5-flash') {
+  constructor(apiKey: string, modelName = 'gemini-2.5-flash') {
     this.apiKey = apiKey;
     this.modelName = modelName;
   }
@@ -81,6 +81,9 @@ export class GeminiProvider implements AIProvider {
       const statusCode = response.status;
 
       if (statusCode === 400 || statusCode === 401 || statusCode === 403) {
+        if (message.toLowerCase().includes('model') || message.toLowerCase().includes('not found') || message.toLowerCase().includes('unsupported')) {
+          throw new AIProviderError(`Configured Gemini model "${this.modelName}" is unavailable. Please update GEMINI_MODEL to a supported model.`, 'MODEL_UNAVAILABLE', 400);
+        }
         throw new AIProviderError('Gemini API key appears invalid or unauthorized.', 'INVALID_API_KEY', 401);
       }
       if (statusCode === 429) {

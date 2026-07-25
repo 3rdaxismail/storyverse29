@@ -2,6 +2,7 @@ import type { ChatRequest } from '../../types/ChatRequest';
 import type { ChatResponse } from '../../types/ChatResponse';
 import { GeminiProvider } from './GeminiProvider';
 import type { AIProvider } from './AIProvider';
+import { getServerConfiguredModelName } from '../../config/aiConfig';
 
 function summarizeContext(request: ChatRequest): string {
   const context = request.selectedContext;
@@ -26,7 +27,7 @@ export class AIService {
   private readonly provider: AIProvider;
 
   constructor(provider?: AIProvider) {
-    this.provider = provider || new GeminiProvider(process.env.GEMINI_API_KEY || '', process.env.GEMINI_MODEL || 'gemini-1.5-flash');
+    this.provider = provider || new GeminiProvider(process.env.GEMINI_API_KEY || '', getServerConfiguredModelName());
   }
 
   async chat(request: ChatRequest): Promise<ChatResponse> {
