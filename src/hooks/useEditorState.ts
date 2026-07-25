@@ -36,7 +36,7 @@ export function useEditorState(
   const [hasFocus, setHasFocus] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [hasSelection, setHasSelection] = useState(false);
-  const typingTimeoutRef = useRef<number | null>(null);
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Handle focus state
   useEffect(() => {

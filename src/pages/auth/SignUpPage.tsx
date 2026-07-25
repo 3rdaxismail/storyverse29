@@ -10,7 +10,7 @@ import '../auth/auth.css';
 
 export default function SignUpPage() {
   const navigate = useNavigate();
-  const { signUp, signInWithGoogle } = useAuth();
+  const { signUp, signInWithGoogle, setIsAuthLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -48,6 +48,7 @@ export default function SignUpPage() {
     if (!validateForm()) return;
 
     setLoading(true);
+    setIsAuthLoading(true);
     try {
       // Sign up with Firebase
       await signUp(email, password);
@@ -55,6 +56,7 @@ export default function SignUpPage() {
       // PublicRoute will redirect to profile setup
     } catch (error: any) {
       console.error('Sign up error:', error);
+      setIsAuthLoading(false);
       setErrors({ 
         email: error.code === 'auth/email-already-in-use' 
           ? 'This email is already registered' 
@@ -69,6 +71,7 @@ export default function SignUpPage() {
     console.log('Google sign-up button clicked');
     setLoading(true);
     setErrors({}); // Clear previous errors
+    setIsAuthLoading(true);
     try {
       console.log('Attempting Google sign-in...');
       await signInWithGoogle();
@@ -77,6 +80,7 @@ export default function SignUpPage() {
       // PublicRoute will redirect based on profileCompleted status
     } catch (error: unknown) {
       console.error('Google sign up error:', error);
+      setIsAuthLoading(false);
       
       let errorMessage = 'Failed to sign up with Google';
       

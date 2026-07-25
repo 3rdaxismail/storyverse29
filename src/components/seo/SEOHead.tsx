@@ -23,7 +23,7 @@ export default function SEOHead({
   structuredData
 }: SEOHeadProps) {
   const fullTitle = title.includes('Storyverse') ? title : `${title} | Storyverse`;
-  const baseUrl = import.meta.env.VITE_APP_URL || 'https://storyverse.co.in';
+  const baseUrl = import.meta.env.VITE_APP_URL || 'https://www.storyverse.co.in';
   const fullCanonical = canonical || window.location.href;
   const defaultImage = `${baseUrl}/pwa-512x512.png`;
 

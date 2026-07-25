@@ -10,7 +10,7 @@ import '../auth/auth.css';
 
 export default function SignInPage() {
   const navigate = useNavigate();
-  const { signIn, signInWithGoogle } = useAuth();
+  const { signIn, signInWithGoogle, setIsAuthLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -27,11 +27,13 @@ export default function SignInPage() {
     }
 
     setLoading(true);
+    setIsAuthLoading(true);
     try {
       await signIn(email, password);
       // PublicRoute will handle redirect based on profile completion
     } catch (error: any) {
       console.error('Sign in error:', error);
+      setIsAuthLoading(false);
       setError(
         error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password'
           ? 'Invalid email or password'
@@ -45,11 +47,13 @@ export default function SignInPage() {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setError(''); // Clear previous errors
+    setIsAuthLoading(true);
     try {
       await signInWithGoogle();
       // PublicRoute will handle navigation after sign-in
     } catch (error: unknown) {
       console.error('Google sign in error:', error);
+      setIsAuthLoading(false);
       
       let errorMessage = 'Failed to sign in with Google';
       

@@ -8,10 +8,12 @@
   max-width: 100%;
   margin: 0;
   padding: 0 16px 100px;
-  background: rgba(13, 13, 15, 1);
+  background: rgba(13, 13, 15, 0);
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Tablet and up */

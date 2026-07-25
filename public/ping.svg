@@ -1,0 +1,4 @@
+<!-- Minimal 1x1 SVG for network latency testing -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1">
+  <rect width="1" height="1" fill="white"/>
+</svg>

@@ -82,14 +82,16 @@ export async function recordWritingActivity(
   wordCount: number = 1,
   storyId?: string
 ): Promise<void> {
+  console.log('[ACTIVITY] 🟦 recordWritingActivity called:', { uid, wordCount, storyId });
+  
   if (!uid) {
-    console.warn('[ACTIVITY] Invalid uid to recordWritingActivity');
+    console.warn('[ACTIVITY] ❌ Invalid uid to recordWritingActivity - UID is empty or null');
     return;
   }
 
   // MINIMUM THRESHOLD: Only record if at least 1 word
   if (wordCount < 1) {
-    console.log('[ACTIVITY] Ignoring sub-threshold activity (wordCount < 1)');
+    console.log('[ACTIVITY] ⏭️ Ignoring sub-threshold activity (wordCount < 1):', wordCount);
     return;
   }
 
@@ -98,21 +100,30 @@ export async function recordWritingActivity(
     const dateKey = formatDateKey(today);
     const now = serverTimestamp();
 
+    console.log('[ACTIVITY] 📝 Activity details:', { dateKey, today: today.toISOString(), uid });
+
     const activityRef = doc(db, `users/${uid}/writingActivity`, dateKey);
+    console.log('[ACTIVITY] 🔗 Activity document path:', `users/${uid}/writingActivity/${dateKey}`);
+    
     const activityDoc = await getDoc(activityRef);
+    console.log('[ACTIVITY] 📋 Document exists:', activityDoc.exists());
 
     if (!activityDoc.exists()) {
       // First write today - CREATE new document
       console.log('[ACTIVITY] 🆕 Creating activity for', dateKey, 'with', wordCount, 'words');
       
       const storyIds = storyId ? [storyId] : [];
-      await setDoc(activityRef, {
+      const newData = {
         date: dateKey,
         wordCount: wordCount,
         storyIds: storyIds,
-        createdAt: now, // First write timestamp (NEVER changes)
+        createdAt: now,
         updatedAt: now,
-      });
+      };
+      console.log('[ACTIVITY] ✍️ Creating document with data:', newData);
+      
+      await setDoc(activityRef, newData);
+      console.log('[ACTIVITY] ✅ Document created successfully');
     } else {
       // Activity exists for today - UPDATE only wordCount and storyIds
       const current = activityDoc.data() as WritingActivityDay;
@@ -122,21 +133,31 @@ export async function recordWritingActivity(
       console.log('[ACTIVITY] 📝 Updating activity for', dateKey, 
         'wordCount:', currentWordCount, '→', wordCount);
       
+      const updateData = {
+        wordCount: wordCount,
+        storyIds: currentStoryIds,
+        updatedAt: now,
+      };
+      console.log('[ACTIVITY] ✍️ Updating document with:', updateData);
+      
       await setDoc(
         activityRef,
-        {
-          wordCount: wordCount, // Set to current total (not delta)
-          storyIds: currentStoryIds,
-          updatedAt: now,
-          // IMPORTANT: Do NOT touch createdAt - it's immutable
-        },
+        updateData,
         { merge: true }
       );
+      console.log('[ACTIVITY] ✅ Document updated successfully');
     }
 
-    console.log('[ACTIVITY] ✅ Activity recorded for', dateKey);
+    console.log('[ACTIVITY] ✅✅ Activity recorded for', dateKey);
   } catch (error) {
     console.error('[ACTIVITY] ❌ Failed to record activity:', error);
+    if (error instanceof Error) {
+      console.error('[ACTIVITY] Error details:', {
+        message: error.message,
+        stack: error.stack,
+        code: (error as any).code
+      });
+    }
     // Don't throw - activity tracking is non-critical
   }
 }
@@ -160,19 +181,26 @@ export async function fetchActivityDates(
   startDate: Date,
   endDate: Date
 ): Promise<Set<string>> {
-  if (!uid) return new Set();
+  if (!uid) {
+    console.warn('[ACTIVITY] fetchActivityDates called with empty uid');
+    return new Set();
+  }
 
   try {
-    console.log('[ACTIVITY] 📊 Fetching activity dates for', uid, 'from', startDate, 'to', endDate);
+    console.log('[ACTIVITY] 📊 Fetching activity dates for', uid, 'from', startDate.toISOString(), 'to', endDate.toISOString());
 
     // Fetch all documents in the writingActivity collection for this user
     const activityRef = collection(db, `users/${uid}/writingActivity`);
+    console.log('[ACTIVITY] 🔗 Collection path:', `users/${uid}/writingActivity`);
+    
     const snapshot = await getDocs(activityRef);
+    console.log('[ACTIVITY] 📦 Snapshot received, total docs:', snapshot.size);
 
     const activeDates = new Set<string>();
 
     snapshot.forEach((docSnap) => {
-      const dateStr = docSnap.id; // Document ID is the date in YYYY-MM-DD format
+      const dateStr = docSnap.id;
+      console.log('[ACTIVITY] 📄 Processing doc:', dateStr, 'data:', docSnap.data());
 
       // Parse the date string
       const [year, month, day] = dateStr.split('-').map(Number);
@@ -181,13 +209,24 @@ export async function fetchActivityDates(
       // Check if within range
       if (activityDate >= startDate && activityDate <= endDate) {
         activeDates.add(dateStr);
+        console.log('[ACTIVITY] ✅ Date added to active set:', dateStr);
+      } else {
+        console.log('[ACTIVITY] ⏭️ Date out of range:', dateStr);
       }
     });
 
-    console.log('[ACTIVITY] ✅ Found', activeDates.size, 'active dates');
+    console.log('[ACTIVITY] ✅ Found', activeDates.size, 'active dates in range');
+    console.log('[ACTIVITY] 📋 Active dates:', Array.from(activeDates));
     return activeDates;
   } catch (error) {
     console.error('[ACTIVITY] ❌ Failed to fetch activity dates:', error);
+    if (error instanceof Error) {
+      console.error('[ACTIVITY] Error details:', {
+        message: error.message,
+        stack: error.stack,
+        code: (error as any).code
+      });
+    }
     return new Set();
   }
 }

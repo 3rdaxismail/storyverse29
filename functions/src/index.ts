@@ -42,9 +42,9 @@ export const storyMeta = functions.https.onRequest(async (req, res) => {
     const story = storyDoc.data();
     const title = story?.title || 'Untitled Story';
     const synopsis = story?.synopsis || getPreview(story?.content || '', 160);
-    const coverImage = story?.coverImage || 'https://storyverse.co.in/dashboard-image.png';
+    const coverImage = story?.coverImage || 'https://www.storyverse.co.in/dashboard-image.png';
     const authorName = story?.authorName || 'Anonymous';
-    const url = `https://storyverse.co.in/story/view/${storyId}`;
+    const url = `https://www.storyverse.co.in/story/view/${storyId}`;
     
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -111,9 +111,9 @@ export const poemMeta = functions.https.onRequest(async (req, res) => {
     const poem = poemDoc.data();
     const title = poem?.title || 'Untitled Poem';
     const preview = poem?.synopsis || getPreview(poem?.content || '', 160);
-    const coverImage = poem?.coverImage || 'https://storyverse.co.in/dashboard-image.png';
+    const coverImage = poem?.coverImage || 'https://www.storyverse.co.in/dashboard-image.png';
     const authorName = poem?.authorName || 'Anonymous';
-    const url = `https://storyverse.co.in/poem/view/${poemId}`;
+    const url = `https://www.storyverse.co.in/poem/view/${poemId}`;
     
     const html = `<!DOCTYPE html>
 <html lang="en">

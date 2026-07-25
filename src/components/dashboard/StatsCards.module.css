@@ -11,8 +11,8 @@
 }
 
 .statCard {
-  background: rgba(255, 255, 255, 0.03);
-  border: none;
+  background: rgba(20, 20, 23, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   padding: 16px;
   transition: none;
@@ -82,8 +82,8 @@
   }
 
   .statCard {
-    background: rgba(255, 255, 255, 0.03);
-    border: none;
+    background: rgba(20, 20, 23, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 20px;
     padding: 28px 24px;
     transition: none;
@@ -91,8 +91,8 @@
   }
 
   .statCard:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: transparent;
+    background: rgba(20, 20, 23, 0.95);
+    border-color: rgba(255, 255, 255, 0.12);
     box-shadow: none;
   }
 

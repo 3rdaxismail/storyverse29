@@ -138,10 +138,39 @@ export default function CommunityActivity() {
     return () => clearInterval(rotationInterval);
   }, [recentMessages.length]);
 
-  if (!user || loading) return null;
+  if (!user) {
+    // Protected route, but show placeholder if not loaded yet
+    return null;
+  }
+
+  // Always render container - never return null to prevent blank screens
+  if (loading) {
+    // Show loading state
+    return (
+      <div 
+        className={styles.communityCard}
+        role="status"
+        aria-label="Loading community activity"
+      >
+        <img src={communityIcon} alt="" className={styles.icon} />
+        <span className={styles.content}>Loading latest activity...</span>
+      </div>
+    );
+  }
 
   if (recentMessages.length === 0) {
-    return null;
+    // Show empty state instead of nothing
+    return (
+      <div 
+        className={styles.communityCard}
+        onClick={() => navigate('/community', { state: { openDrawer: true } })}
+        role="button"
+        tabIndex={0}
+      >
+        <img src={communityIcon} alt="" className={styles.icon} />
+        <span className={styles.content}>Join the community conversation</span>
+      </div>
+    );
   }
 
   const truncateContent = (content: string, maxLength: number = 30): string => {

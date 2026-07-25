@@ -125,7 +125,9 @@ export default function StatsCards() {
     return num.toString();
   };
 
-  if (!user) return null;
+  // Always render - never return null or blank
+  // If no user, show skeleton/placeholder state (which won't happen on protected route)
+  // But this prevents blank screen if there's an unexpected state issue
 
   return (
     <div className={styles.statsContainer}>
@@ -133,7 +135,7 @@ export default function StatsCards() {
         <img src={iconTotalWords} alt="" className={styles.statIcon} />
         <div className={styles.statContent}>
           <div className={styles.statValue}>
-            {loading ? '...' : formatNumber(animatedWords)}
+            {!user || loading ? '...' : formatNumber(animatedWords)}
           </div>
           <div className={styles.statLabel}>Total words</div>
         </div>
@@ -143,7 +145,7 @@ export default function StatsCards() {
         <img src={iconStreak} alt="" className={styles.statIcon} />
         <div className={styles.statContent}>
           <div className={styles.statValue}>
-            {(loading || activityLoading) ? '...' : `${animatedStreak} ${animatedStreak === 1 ? 'Day' : 'Days'}`}
+            {!user || loading || activityLoading ? '...' : `${animatedStreak} ${animatedStreak === 1 ? 'Day' : 'Days'}`}
           </div>
           <div className={styles.statLabel}>Streak</div>
         </div>

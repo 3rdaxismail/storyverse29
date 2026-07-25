@@ -18,6 +18,7 @@ interface ChapterTextEditorProps {
   onContentChange: (chapterId: string, content: string) => void;
   onFocus: (chapterId: string) => void;
   onBlur: (chapterId: string) => void;
+  onSelectionChange?: (chapterId: string, selection: { start: number; end: number; text: string }) => void;
   onOverflowChange?: (hasOverflow: boolean) => void;
 }
 
@@ -32,6 +33,7 @@ export default function ChapterTextEditor({
   onContentChange,
   onFocus,
   onBlur,
+  onSelectionChange,
   onOverflowChange
 }: ChapterTextEditorProps) {
   const [localContent, setLocalContent] = useState(content);
@@ -75,6 +77,14 @@ export default function ChapterTextEditor({
 
   const handleBlur = () => {
     onBlur(chapterId);
+  };
+
+  const emitSelection = () => {
+    if (!textareaRef.current || !onSelectionChange) return;
+    const start = textareaRef.current.selectionStart ?? 0;
+    const end = textareaRef.current.selectionEnd ?? 0;
+    const text = localContent.slice(start, end);
+    onSelectionChange(chapterId, { start, end, text });
   };
 
   // Auto-resize textarea
@@ -149,6 +159,9 @@ export default function ChapterTextEditor({
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onSelect={emitSelection}
+        onKeyUp={emitSelection}
+        onMouseUp={emitSelection}
         placeholder={placeholder}
         rows={3}
         readOnly={!isOnline}

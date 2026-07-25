@@ -33,6 +33,8 @@ interface AuthContextType {
   user: User | null;
   userProfile: UserProfile | null;
   loading: boolean;
+  isAuthLoading: boolean;
+  setIsAuthLoading: (loading: boolean) => void;
   sessionStatus: SessionStatus;
   sessionConflict: SessionConflict | null;
   signUp: (email: string, password: string) => Promise<void>;
@@ -48,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [sessionStatus, setSessionStatus] = useState<SessionStatus>('inactive');
   const [sessionConflict, setSessionConflict] = useState<SessionConflict | null>(null);
 
@@ -191,6 +194,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       userProfile,
       loading,
+      isAuthLoading,
+      setIsAuthLoading,
       sessionStatus,
       sessionConflict,
       signUp,

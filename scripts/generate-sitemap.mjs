@@ -49,7 +49,7 @@ async function generateSitemap() {
   
   <!-- Homepage -->
   <url>
-    <loc>https://storyverse.co.in/</loc>
+    <loc>https://www.storyverse.co.in/</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -57,14 +57,14 @@ async function generateSitemap() {
   
   <!-- Main Pages -->
   <url>
-    <loc>https://storyverse.co.in/trending</loc>
+    <loc>https://www.storyverse.co.in/trending</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://storyverse.co.in/community</loc>
+    <loc>https://www.storyverse.co.in/community</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -72,14 +72,14 @@ async function generateSitemap() {
   
   <!-- Auth Pages -->
   <url>
-    <loc>https://storyverse.co.in/login</loc>
+    <loc>https://www.storyverse.co.in/login</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://storyverse.co.in/signup</loc>
+    <loc>https://www.storyverse.co.in/signup</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -104,7 +104,7 @@ async function generateSitemap() {
       
       sitemap += `  <!-- Story: ${story.title} -->
   <url>
-    <loc>https://storyverse.co.in/story/view/${doc.id}</loc>
+    <loc>https://www.storyverse.co.in/story/view/${doc.id}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -129,7 +129,7 @@ async function generateSitemap() {
       
       sitemap += `  <!-- Poem: ${poem.title} -->
   <url>
-    <loc>https://storyverse.co.in/poem/view/${doc.id}</loc>
+    <loc>https://www.storyverse.co.in/poem/view/${doc.id}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

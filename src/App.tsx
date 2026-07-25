@@ -7,6 +7,7 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import CreateProjectPage from './pages/create/CreateProjectPage';
 import StoryEditorPage from './pages/story-editor/StoryEditorPage';
 import StoryReaderPage from './pages/story-reader/StoryReaderPage';
+import TimelinePage from './pages/story-editor/TimelinePage';
 import PoemEditorPage from './pages/poem-editor/PoemEditorPage';
 import PoemReaderPage from './pages/poem-reader/PoemReaderPage';
 import CharacterProfilePage from './pages/character-profile/CharacterProfilePage';
@@ -19,6 +20,7 @@ import PWAUpdateNotification from './components/pwa/PWAUpdateNotification';
 import OfflineNotice from './components/common/OfflineNotice';
 import { useOnlineStatus } from './hooks/useOnlineStatus';
 import SessionConflictModal from './components/session/SessionConflictModal';
+import AuthLoadingOverlay from './components/auth/AuthLoadingOverlay';
 import { useAuth } from './firebase/AuthContext';
 
 // Auth pages
@@ -56,6 +58,7 @@ function App() {
         <BrowserRouter>
           <PWAUpdateNotification />
           <OfflineNotice isOnline={isOnline} />
+          <AuthLoadingOverlay />
           
           {/* Show session conflict modal when needed */}
           {sessionStatus === 'conflicted' && sessionConflict && (
@@ -93,9 +96,7 @@ function App() {
             path="/editor/story/:storyId"
             element={
               <ProtectedRoute>
-                <ScreenLayout>
-                  <StoryEditorPage />
-                </ScreenLayout>
+                <StoryEditorPage />
               </ProtectedRoute>
             }
           />
@@ -105,6 +106,16 @@ function App() {
               <ScreenLayout>
                 <StoryReaderPage />
               </ScreenLayout>
+            }
+          />
+          <Route
+            path="/story/timeline/:storyId"
+            element={
+              <ProtectedRoute>
+                <ScreenLayout>
+                  <TimelinePage />
+                </ScreenLayout>
+              </ProtectedRoute>
             }
           />
           <Route

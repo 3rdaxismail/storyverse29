@@ -4,29 +4,28 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../firebase/AuthContext';
 import { useOnlineStatus } from '../../hooks/useOnlineStatus';
-import HeaderBar from "../../components/header/HeaderBar";
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import BottomNavigation from "../../components/navigation/BottomNavigation";
 import Card from "../../components/common/Card";
-import { ProjectCover, CoverImageCropper } from "../../components/common";
 import Toast from "../../components/common/Toast";
 import ConfirmationToast from "../../components/common/ConfirmationToast";
-
-import IdentityHeader from "../../components/story/StoryMetaSection/IdentityHeader";
-import TitleInputBlock from "../../components/story/StoryMetaSection/TitleInputBlock";
-import MetaDropdownBlock from "../../components/story/StoryMetaSection/MetaDropdownBlock";
-import StatsBlock from "../../components/story/StoryMetaSection/StatsBlock";
-import ExcerptBlock from "../../components/editor/ExcerptBlock";
-import CharacterProfiles from "../../components/story/CharacterProfiles";
-import LocationSection, { type Location } from "../../components/story/LocationSection";
-import ActSection from "../../components/story/ActSection";
-import type { EditorState } from "../../components/story/ChapterTextEditor";
+import ChapterTextEditor, { type EditorState } from "../../components/story/ChapterTextEditor";
+import StoryEditorSidebar from "../../components/story/StoryEditorSidebar";
+import StoryEditorScenesPanel from "../../components/story/StoryEditorScenesPanel";
+import AIAssistantPanel from "../../components/ai/AIAssistantPanel";
+import StoryEditorTopBar from "../../components/story/StoryEditorTopBar";
+import type { Location } from "../../components/story/LocationSection";
+import type { AISelectionRange } from "../../types/AIEditing";
+import "../../components/story/StoryEditorLayout.css";
 
 import writingSessionEngine from "../../engine/WritingSessionEngine";
 import storageManager from "../../engine/storage/StorageManager";
 import { exportStoryAsPDF } from "../../utils/exportStoryPDF";
+import { moveChapterUp, moveChapterDown } from "../../firebase/services/chapterReorderService";
+import type { Chapter as ReorderChapter, Act as ReorderAct } from "../../firebase/services/chapterReorderService";
 import "./StoryEditorPage.css";
 
-interface Chapter {
+export interface Chapter {
   id: string;
   title: string;
   characterIds: string[];
@@ -35,7 +34,7 @@ interface Chapter {
   state: EditorState;
 }
 
-interface Act {
+export interface Act {
   id: string;
   title: string;
   chapters: Chapter[];
@@ -46,6 +45,7 @@ export default function StoryEditorPage() {
   const { storyId } = useParams<{ storyId: string }>();
   const { user, userProfile } = useAuth();
   const isOnline = useOnlineStatus();
+  const isMobile = useMediaQuery('(max-width: 900px)');
   
   // Loading and error states
   const [loading, setLoading] = useState(true);
@@ -75,6 +75,8 @@ export default function StoryEditorPage() {
 
   // Track expanded chapter for collapse/expand behavior (only one at a time)
   const [expandedChapterId, setExpandedChapterId] = useState<string | null>(null);
+  const [activeSelection, setActiveSelection] = useState<AISelectionRange | null>(null);
+  const [aiEditHistory, setAiEditHistory] = useState<Array<{ chapterId: string; previousContent: string; summary: string; createdAt: number }>>([]);
 
   // State for managing which dropdown is open (only one at a time)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -92,6 +94,33 @@ export default function StoryEditorPage() {
   const [showDeleteActConfirm, setShowDeleteActConfirm] = useState(false);
   const [actToDelete, setActToDelete] = useState<string | null>(null);
   const [actDeleteMessage, setActDeleteMessage] = useState('');
+
+  const handleChapterSelect = (chapterId: string) => {
+    setActiveChapterId(chapterId);
+    setExpandedChapterId(chapterId);
+    console.log('[StoryEditorPage] 📌 Chapter selected via sidebar:', chapterId);
+  };
+
+  const fallbackAct = acts.find((act) => act.chapters.length > 0);
+  const activeActItem = acts.find((act) => act.chapters.some((chapter) => chapter.id === activeChapterId)) || fallbackAct;
+  const activeChapter = activeActItem?.chapters.find((chapter) => chapter.id === activeChapterId) || activeActItem?.chapters[0];
+  const activeChapterTitle = activeChapter?.title || 'Current scene';
+  const activeBreadcrumb = activeActItem ? `${activeActItem.title} · ${activeChapterTitle}` : 'Story Editor';
+  const activeCharacters = activeChapter ? characterProfiles.filter((character) => activeChapter.characterIds.includes(character.id)) : [];
+  const sceneContextItems = acts.flatMap((act) =>
+    act.chapters.map((chapter) => ({
+      id: chapter.id,
+      label: `${act.title}: ${chapter.title || 'Untitled Chapter'}`,
+    }))
+  );
+  const characterContextItems = characterProfiles.map((character) => ({
+    id: character.id,
+    label: character.name,
+  }));
+  const locationContextItems = locations.map((location) => ({
+    id: location.id,
+    label: location.name,
+  }));
 
   const showNotification = (message: string, type: 'warning' | 'error' | 'success' | 'info' = 'info') => {
     setToastMessage(message);
@@ -303,6 +332,17 @@ export default function StoryEditorPage() {
     return unsubscribe;
   }, [loading, authorized, storyId]);
 
+  // Auto-select first chapter after loading to avoid empty-state desktop header.
+  useEffect(() => {
+    if (activeChapterId || acts.length === 0) return;
+    const firstActWithChapter = acts.find((act) => act.chapters.length > 0);
+    const firstChapter = firstActWithChapter?.chapters[0];
+    if (firstChapter) {
+      setActiveChapterId(firstChapter.id);
+      setExpandedChapterId(firstChapter.id);
+    }
+  }, [acts, activeChapterId]);
+
   // Calculate stats whenever acts change
   useEffect(() => {
     if (!acts.length) {
@@ -460,6 +500,181 @@ export default function StoryEditorPage() {
     setExpandedChapterId(prev => prev === chapterId ? null : chapterId);
   };
 
+  // Helper functions for chapter movement
+  const canChapterMoveUp = (chapterId: string): boolean => {
+    // Find the act that contains this chapter
+    const actIndex = acts.findIndex(act => act.chapters.some(ch => ch.id === chapterId));
+    if (actIndex === -1) return false;
+
+    const act = acts[actIndex];
+    const chapterIndex = act.chapters.findIndex(ch => ch.id === chapterId);
+    
+    // Can move up if not first in first act
+    return !(actIndex === 0 && chapterIndex === 0);
+  };
+
+  const canChapterMoveDown = (chapterId: string): boolean => {
+    // Find the act that contains this chapter
+    const actIndex = acts.findIndex(act => act.chapters.some(ch => ch.id === chapterId));
+    if (actIndex === -1) return false;
+
+    const act = acts[actIndex];
+    const chapterIndex = act.chapters.findIndex(ch => ch.id === chapterId);
+    const lastActIndex = acts.length - 1;
+    
+    // Can move down if not last in last act
+    return !(actIndex === lastActIndex && chapterIndex === act.chapters.length - 1);
+  };
+
+  const handleMoveChapterUp = async (chapterId: string, currentActId: string) => {
+    if (!storyId || !isOnline) {
+      showNotification('Cannot move chapter while offline', 'warning');
+      return;
+    }
+
+    try {
+      // Find current chapter and act
+      const currentActIndex = acts.findIndex(act => act.id === currentActId);
+      if (currentActIndex === -1) return;
+
+      const currentAct = acts[currentActIndex];
+      const chapterIndex = currentAct.chapters.findIndex(ch => ch.id === chapterId);
+      if (chapterIndex === -1) return;
+
+      // Convert for Firestore service
+      const reorderActs: ReorderAct[] = acts.map(act => ({
+        actId: act.id,
+        actTitle: act.title,
+        actOrder: 0
+      }));
+      
+      const reorderChapters: ReorderChapter[] = acts.flatMap(act =>
+        act.chapters.map((ch, idx) => ({
+          chapterId: ch.id,
+          actId: act.id,
+          chapterTitle: ch.title,
+          assignedCharacterIds: ch.characterIds,
+          assignedLocationIds: ch.locationIds,
+          expanded: false,
+          chapterOrder: idx, // Use index as order
+          lastEditedAt: 0
+        }))
+      );
+
+      // Perform Firestore update
+      const result = await moveChapterUp(storyId, chapterId, currentActId, chapterIndex, reorderActs, reorderChapters);
+
+      if (result.success) {
+        // Sync WritingSessionEngine with new chapter orders from Firestore
+        const updates: Array<[string, string, number]> = result.updatedChapters.map(ch => 
+          [ch.id, ch.actId, ch.order] as [string, string, number]
+        );
+        writingSessionEngine.batchUpdateChapterOrders(updates);
+
+        // Update local state by moving chapter in the UI
+        setActs(prevActs => {
+          const newActs = [...prevActs];
+          const fromActIdx = newActs.findIndex(a => a.id === currentActId);
+          const fromChIdx = newActs[fromActIdx].chapters.findIndex(ch => ch.id === chapterId);
+
+          if (fromChIdx > 0) {
+            // Moving up within same act - swap
+            const temp = newActs[fromActIdx].chapters[fromChIdx];
+            newActs[fromActIdx].chapters[fromChIdx] = newActs[fromActIdx].chapters[fromChIdx - 1];
+            newActs[fromActIdx].chapters[fromChIdx - 1] = temp;
+          } else if (fromActIdx > 0) {
+            // Moving to previous act
+            const chapter = newActs[fromActIdx].chapters[fromChIdx];
+            newActs[fromActIdx].chapters.splice(fromChIdx, 1);
+            newActs[fromActIdx - 1].chapters.push(chapter);
+          }
+
+          return newActs;
+        });
+
+        showNotification('Chapter moved up', 'success');
+      }
+    } catch (error) {
+      console.error('Failed to move chapter up:', error);
+      showNotification('Failed to move chapter', 'error');
+    }
+  };
+
+  const handleMoveChapterDown = async (chapterId: string, currentActId: string) => {
+    if (!storyId || !isOnline) {
+      showNotification('Cannot move chapter while offline', 'warning');
+      return;
+    }
+
+    try {
+      // Find current chapter and act
+      const currentActIndex = acts.findIndex(act => act.id === currentActId);
+      if (currentActIndex === -1) return;
+
+      const currentAct = acts[currentActIndex];
+      const chapterIndex = currentAct.chapters.findIndex(ch => ch.id === chapterId);
+      if (chapterIndex === -1) return;
+
+      // Convert for Firestore service
+      const reorderActs: ReorderAct[] = acts.map(act => ({
+        actId: act.id,
+        actTitle: act.title,
+        actOrder: 0
+      }));
+      
+      const reorderChapters: ReorderChapter[] = acts.flatMap(act =>
+        act.chapters.map((ch, idx) => ({
+          chapterId: ch.id,
+          actId: act.id,
+          chapterTitle: ch.title,
+          assignedCharacterIds: ch.characterIds,
+          assignedLocationIds: ch.locationIds,
+          expanded: false,
+          chapterOrder: idx, // Use index as order
+          lastEditedAt: 0
+        }))
+      );
+
+      // Perform Firestore update
+      const result = await moveChapterDown(storyId, chapterId, currentActId, chapterIndex, reorderActs, reorderChapters);
+
+      if (result.success) {
+        // Sync WritingSessionEngine with new chapter orders from Firestore
+        const updates: Array<[string, string, number]> = result.updatedChapters.map(ch => 
+          [ch.id, ch.actId, ch.order] as [string, string, number]
+        );
+        writingSessionEngine.batchUpdateChapterOrders(updates);
+
+        // Update local state by moving chapter in the UI
+        setActs(prevActs => {
+          const newActs = [...prevActs];
+          const fromActIdx = newActs.findIndex(a => a.id === currentActId);
+          const fromChIdx = newActs[fromActIdx].chapters.findIndex(ch => ch.id === chapterId);
+          const lastChIdx = newActs[fromActIdx].chapters.length - 1;
+
+          if (fromChIdx < lastChIdx) {
+            // Moving down within same act - swap
+            const temp = newActs[fromActIdx].chapters[fromChIdx];
+            newActs[fromActIdx].chapters[fromChIdx] = newActs[fromActIdx].chapters[fromChIdx + 1];
+            newActs[fromActIdx].chapters[fromChIdx + 1] = temp;
+          } else if (fromActIdx < newActs.length - 1) {
+            // Moving to next act
+            const chapter = newActs[fromActIdx].chapters[fromChIdx];
+            newActs[fromActIdx].chapters.splice(fromChIdx, 1);
+            newActs[fromActIdx + 1].chapters.unshift(chapter);
+          }
+
+          return newActs;
+        });
+
+        showNotification('Chapter moved down', 'success');
+      }
+    } catch (error) {
+      console.error('Failed to move chapter down:', error);
+      showNotification('Failed to move chapter', 'error');
+    }
+  };
+
   const handleAddCharacterToChapter = (chapterId: string, characterId: string) => {
     // Save to engine
     writingSessionEngine.assignCharacterToChapter(chapterId, characterId);
@@ -521,6 +736,42 @@ export default function StoryEditorPage() {
           : ch
       )
     })));
+  };
+
+  const handleSelectionChange = (chapterId: string, selection: AISelectionRange) => {
+    if (chapterId !== activeChapter?.id) return;
+    setActiveSelection(selection);
+  };
+
+  const handleApplyAiSceneContent = (nextContent: string, summary: string) => {
+    if (!activeChapter) return;
+
+    setAiEditHistory((prev) => [
+      {
+        chapterId: activeChapter.id,
+        previousContent: activeChapter.content,
+        summary,
+        createdAt: Date.now(),
+      },
+      ...prev,
+    ]);
+
+    handleChapterContentChange(activeChapter.id, nextContent);
+    setActiveSelection(null);
+    showNotification('AI changes applied to current scene', 'success');
+  };
+
+  const handleUndoLastAiEdit = () => {
+    if (!activeChapter) return;
+    const latestForChapter = aiEditHistory.find((entry) => entry.chapterId === activeChapter.id);
+    if (!latestForChapter) {
+      showNotification('No AI edits to undo for this scene', 'info');
+      return;
+    }
+
+    handleChapterContentChange(activeChapter.id, latestForChapter.previousContent);
+    setAiEditHistory((prev) => prev.filter((entry) => entry !== latestForChapter));
+    showNotification('Last AI edit undone', 'success');
   };
 
   // Location handlers
@@ -891,13 +1142,13 @@ export default function StoryEditorPage() {
   if (loading) {
     return (
       <div className="story-page">
-        <HeaderBar />
+        <StoryEditorTopBar storyTitle={writingSessionEngine.getStoryTitle() || 'Untitled Story'} />
         <main className="story-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
           <div style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.6)' }}>
             Loading story...
           </div>
         </main>
-        <BottomNavigation activeTab="write" />
+        {isMobile && <BottomNavigation activeTab="write" />}
       </div>
     );
   }
@@ -906,7 +1157,7 @@ export default function StoryEditorPage() {
   if (error || !authorized) {
     return (
       <div className="story-page">
-        <HeaderBar />
+        <StoryEditorTopBar storyTitle={writingSessionEngine.getStoryTitle() || 'Untitled Story'} />
         <main className="story-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', flexDirection: 'column', gap: '20px' }}>
           <div style={{ textAlign: 'center', color: 'rgba(255, 108, 87, 1)', fontSize: '1.125rem' }}>
             {error || 'Unauthorized'}
@@ -926,7 +1177,7 @@ export default function StoryEditorPage() {
             Back to Home
           </button>
         </main>
-        <BottomNavigation activeTab="write" />
+        {isMobile && <BottomNavigation activeTab="write" />}
       </div>
     );
   }
@@ -934,153 +1185,146 @@ export default function StoryEditorPage() {
   return (
     <div className="story-page">
       {/* HEADER */}
-      <HeaderBar />
+      <StoryEditorTopBar
+        storyTitle={writingSessionEngine.getStoryTitle() || 'Untitled Story'}
+        isSaving={activeChapter?.state === 'syncing'}
+        onShare={() => showNotification('Share coming soon', 'info')}
+        onFocusMode={() => showNotification('Focus mode coming soon', 'info')}
+        onMenu={() => showNotification('More options coming soon', 'info')}
+      />
 
       {/* SCROLLABLE CONTENT */}
       <main className="story-content">
-        {/* Cover Image */}
-        <ProjectCover
-          coverImageUrl={coverImageUrl}
-          onUpload={handleCoverUpload}
-          onDelete={handleCoverDelete}
-          projectType="story"
-        />
-        
-        {/* Cover Image Cropper Modal */}
-        {coverImageFile && (
-          <CoverImageCropper
-            imageFile={coverImageFile}
-            onSave={handleCoverSave}
-            onCancel={handleCoverCancel}
+        <div className="story-editor-layout">
+          <StoryEditorSidebar
+            storyTitle={writingSessionEngine.getStoryTitle() || 'Untitled Story'}
+            storyId={storyId}
           />
-        )}
-        
-        {/* Story Identity & Title - directly on background */}
-        <IdentityHeader
-          onOpenDropdown={handleOpenDropdown}
-          openDropdown={openDropdown}
-          onViewStory={handleViewStory}
-        />
-        
-        <TitleInputBlock isOnline={isOnline} />
 
-        {/* Genre & Meta Block - in a card */}
-        <Card>
-          <MetaDropdownBlock
-            readTime={readTime}
-            onOpenDropdown={handleOpenDropdown}
-            openDropdown={openDropdown}
+          <StoryEditorScenesPanel
+            acts={acts}
+            activeChapterId={activeChapterId}
+            onSelectChapter={handleChapterSelect}
+            onAddScene={() => {
+              const targetActId = activeActItem?.id || acts[0]?.id;
+              if (targetActId) {
+                handleAddChapter(targetActId);
+              } else {
+                handleAddAct();
+              }
+            }}
           />
-        </Card>
 
-        {/* Stats - in a card */}
-        <Card>
-          <StatsBlock
-            words={formatCount(wordCount)}
-            dialogues={formatCount(dialogueCount)}
-            characters={characterProfiles.length.toString()}
-            locations={locations.length.toString()}
-            acts={acts.length.toString()}
-            chapters={acts.reduce((total, act) => total + act.chapters.length, 0).toString()}
+          <div className="story-editor-main">
+            <div className="story-editor-topbar">
+              <div className="story-editor-topbar-row">
+                <div className="story-editor-crumbs">{activeBreadcrumb}</div>
+                <div className="story-editor-topbar-right">
+                  <button className="story-editor-status-pill">
+                    In Progress
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                  <button className="story-editor-topbar-menu" aria-label="Scene options">⋯</button>
+                </div>
+              </div>
+
+              <div className="story-editor-heading">
+                <h1>{activeChapterTitle}</h1>
+              </div>
+            </div>
+
+            <div className="story-editor-main-content">
+              <section className="story-editor-copycard">
+                <div className="story-editor-copybar">
+                  <button>Paragraph</button>
+                  <button>B</button>
+                  <button>I</button>
+                  <button>U</button>
+                  <button>S</button>
+                  <button>List</button>
+                  <button>Link</button>
+                  <button>Image</button>
+                  <button>Undo</button>
+                  <button>Redo</button>
+                </div>
+
+                <ChapterTextEditor
+                  chapterId={activeChapter?.id ?? 'active-scene'}
+                  content={activeChapter?.content ?? ''}
+                  state={activeChapter?.state ?? 'idle'}
+                  isActive={true}
+                  isExpanded={true}
+                  placeholder="Write your chapter scene here..."
+                  isOnline={isOnline}
+                  onContentChange={handleChapterContentChange}
+                  onFocus={handleEditorFocus}
+                  onBlur={handleEditorBlur}
+                  onSelectionChange={handleSelectionChange}
+                />
+              </section>
+
+              <Card className="story-editor-details-card">
+                <div className="scene-details-header">
+                  <div>
+                    <div className="scene-details-title">Scene Details</div>
+                    <div className="scene-details-subtitle">Purpose, conflict, cast, and timeline for your current scene.</div>
+                  </div>
+                  <button className="scene-details-edit">Edit</button>
+                </div>
+
+                <div className="scene-detail-grid">
+                  <div>
+                    <div className="scene-detail-label">Purpose</div>
+                    <div>Plot Point 1</div>
+                  </div>
+                  <div>
+                    <div className="scene-detail-label">Conflict</div>
+                    <div>Internal: Duty vs. Truth</div>
+                    <div>External: Council’s oppression</div>
+                  </div>
+                  <div>
+                    <div className="scene-detail-label">Characters</div>
+                    <div className="scene-detail-chips">
+                      {activeCharacters.slice(0, 3).map((character) => (
+                        <span key={character.id}>{character.name}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="scene-detail-label">Timeline</div>
+                    <div>Day 5 of Month 3</div>
+                  </div>
+                </div>
+
+                <div className="scene-detail-footer">
+                  <span>Est. runtime: 3m 12s</span>
+                  <span>Story Arc: Inciting Incident</span>
+                  <span>Completion: In Progress</span>
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          <AIAssistantPanel
+            storyId={storyId}
+            currentActId={activeActItem?.id}
+            currentSceneId={activeChapter?.id}
+            sceneContent={activeChapter?.content ?? ''}
+            currentSelection={activeSelection}
+            onApplySceneContent={handleApplyAiSceneContent}
+            onUndoLastAiEdit={handleUndoLastAiEdit}
+            canUndoAiEdit={aiEditHistory.some((entry) => entry.chapterId === activeChapter?.id)}
+            scenes={sceneContextItems}
+            characters={characterContextItems}
+            locations={locationContextItems}
           />
-        </Card>
-
-        {/* Card 1: Excerpt */}
-        <Card>
-          <ExcerptBlock
-            excerptHeadingSectionId="excerpt-heading"
-            excerptBodySectionId="excerpt-body"
-          />
-        </Card>
-
-        {/* Card 2: Characters */}
-        <Card>
-          <CharacterProfiles
-            characters={characterProfiles}
-            onAddCharacter={handleAddCharacter}
-            onSelectCharacter={handleSelectCharacter}
-          />
-        </Card>
-
-        {/* Card 3: Locations */}
-        <Card>
-          <LocationSection
-            locations={locations}
-            onAddLocation={handleAddLocation}
-            onUpdateLocation={handleUpdateLocation}
-            onDeleteLocation={handleDeleteLocation}
-          />
-        </Card>
-
-        {/* Acts and Chapters (ActSection already handles its own card styling) */}
-        {acts.map((act, index) => (
-          <ActSection
-            key={act.id}
-            actId={act.id}
-            actNumber={index + 1}
-            actTitle={act.title}
-            chapters={act.chapters}
-            availableCharacters={characterProfiles}
-            availableLocations={locations}
-            expandedChapterId={expandedChapterId}
-            activeEditorId={activeChapterId}
-            isOnline={isOnline}
-            onActTitleChange={handleActTitleChange}
-            onDeleteAct={handleDeleteAct}
-            onAddChapter={handleAddChapter}
-            onChapterTitleChange={handleChapterTitleChange}
-            onDeleteChapter={handleDeleteChapter}
-            onToggleChapterExpanded={handleToggleChapterExpanded}
-            onAddCharacter={handleAddCharacterToChapter}
-            onRemoveCharacter={handleRemoveCharacterFromChapter}
-            onAddLocation={handleAddLocationToChapter}
-            onRemoveLocation={handleRemoveLocationFromChapter}
-            onCreateNewLocation={handleCreateNewLocationForChapter}
-            onChapterContentChange={handleChapterContentChange}
-            onChapterEditorFocus={handleEditorFocus}
-            onChapterEditorBlur={handleEditorBlur}
-          />
-        ))}
-
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          {/* Add Act Button */}
-          <button 
-            className="add-act-button" 
-            onClick={handleAddAct}
-            disabled={!isOnline}
-            style={!isOnline ? { opacity: 0.5, cursor: 'not-allowed' } : undefined}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 5V19M5 12H19"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span>Add Act</span>
-          </button>
-
-          {/* Export PDF Button */}
-          <button 
-            className="add-act-button" 
-            onClick={handleExportPDF}
-            style={{ background: 'rgba(100, 120, 180, 0.1)', borderColor: 'rgba(100, 120, 180, 0.3)' }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
-                fill="currentColor"
-              />
-            </svg>
-            <span>Export as PDF</span>
-          </button>
         </div>
       </main>
 
       {/* FLOATING FOOTER */}
-      <BottomNavigation activeTab="write" />
+      {isMobile && <BottomNavigation activeTab="write" />}
 
       {/* Toast Notifications */}
       <Toast

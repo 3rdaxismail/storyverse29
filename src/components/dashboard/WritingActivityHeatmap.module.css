@@ -6,8 +6,8 @@
 .heatmap {
   width: 100%;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border: none;
+  background: rgba(20, 20, 23, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   margin-bottom: 0;
   backdrop-filter: none;
@@ -134,10 +134,10 @@
   .monthsContainer {
     display: flex !important;
     flex-direction: row !important;
-    gap: 48px;
+    gap: 20px;
     margin-bottom: 12px;
     justify-content: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     overflow: visible;
     max-width: 100%;
     box-sizing: border-box;
@@ -146,7 +146,6 @@
   .monthSection {
     flex: 0 0 auto !important;
     min-width: 0;
-    max-width: 33%;
   }
 
   .monthLabel {
@@ -182,7 +181,7 @@
 @media (min-width: 768px) {
   .heatmap {
     padding: 20px;
-    border: none;
+    border: 0.5px solid rgba(255, 255, 255, 0.12);
     border-radius: 16px;
     margin-bottom: 24px;
   }

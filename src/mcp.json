@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "figma": {
+      "command": "node",
+      "args": ["d:\\storyverse\\mcp\\figma-server.js"],
+      "env": {
+        "FIGMA_API_TOKEN": "REDACTED"
+      }
+    }
+  }
+}

@@ -59,6 +59,77 @@
   color: rgba(255, 107, 107, 1);
 }
 
+.deleteButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.collapseButtonProminent {
+  background: var(--brand-primary);
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  min-width: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 1);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.collapseButtonProminent:hover {
+  background: var(--status-success);
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(67, 255, 146, 0.3);
+}
+
+.collapseButtonProminent:active {
+  transform: scale(0.95);
+}
+
+.moveButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(165, 183, 133, 0.6);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+.moveButton:hover:not(:disabled) {
+  color: rgba(165, 183, 133, 1);
+  background: rgba(165, 183, 133, 0.1);
+  transform: scale(1.05);
+}
+
+.moveButton:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.moveButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.25;
+  color: rgba(165, 183, 133, 0.2);
+}
+
 .chapterNumber {
   color: rgba(165, 183, 133, 1);
 }
@@ -215,3 +286,161 @@
     margin-bottom: 16px;
   }
 }
+
+/* ========================================================================== */
+/* COLLAPSED STATE - Thin strip view */
+/* ========================================================================== */
+
+.chapterCard.collapsed {
+  padding: 0px 6px;
+  background: rgba(15, 18, 22, 1);
+  border: 0.5px solid rgba(60, 65, 72, 1);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: -6px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile: Add spacing between collapsed cards */
+@media (max-width: 768px) {
+  .chapterCard.collapsed {
+    margin-bottom: 8px;
+  }
+}
+
+.chapterCard.collapsed:hover {
+  background: rgba(22, 27, 34, 1);
+  border-color: var(--border-strong);
+}
+
+.chapterCard.collapsed:active {
+  transform: scale(0.99);
+}
+
+.collapsedHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 0;
+  min-height: 16px;
+  line-height: normal;
+  padding: 2px 0;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.expandIcon {
+  width: 14px;
+  height: 14px;
+  color: var(--brand-primary);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chapterCard.collapsed:hover .expandIcon {
+  color: var(--status-success);
+}
+
+.collapsedTitle {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 1);
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.collapsedTitle .chapterNumber {
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.collapsedTitle .chapterName {
+  color: rgba(255, 255, 255, 0.8);
+  cursor: inherit;
+  transition: none;
+}
+
+.collapsedTitle .chapterName:hover {
+  opacity: 1;
+}
+
+.quickActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.quickActions .deleteButton {
+  padding: 3px;
+  min-width: 20px;
+  min-height: 20px;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.quickActions .deleteButton:hover {
+  opacity: 1;
+  color: var(--status-error);
+}
+
+/* ========================================================================== */
+/* EXPANDED STATE - Full card view */
+/* ========================================================================== */
+
+.chapterCard.expanded {
+  padding: 12px;
+  border-color: var(--brand-primary);
+}
+
+.collapseButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  min-width: 28px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-primary);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.collapseButton:hover {
+  color: var(--status-success);
+  background: rgba(165, 183, 133, 0.1);
+  transform: scale(1.08);
+}
+
+.collapseButton:active {
+  transform: scale(0.95);
+}
+
+@media (min-width: 520px) {
+  .chapterCard.expanded {
+    padding: 20px;
+  }
+
+  .collapsedHeader {
+    margin-bottom: 16px;
+  }
+}
+

@@ -11,7 +11,7 @@ import styles from './FreeStoryWritingAppPage.module.css';
 
 export default function FreeStoryWritingAppPage() {
   const navigate = useNavigate();
-  const baseUrl = import.meta.env.VITE_APP_URL || 'https://storyverse.co.in';
+  const baseUrl = import.meta.env.VITE_APP_URL || 'https://www.storyverse.co.in';
 
   const structuredData = {
     "@context": "https://schema.org",

@@ -3,8 +3,8 @@
  * No border by default, shows brand color border when focused/selected
  */
 .card {
-  background: rgba(20, 20, 22, 1);
-  border: 1px solid transparent;
+  background: rgba(20, 20, 23, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 12px;
   width: 100%;

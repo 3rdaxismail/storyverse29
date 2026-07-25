@@ -21,4 +21,4 @@ Disallow: /trending
 Disallow: /character-profile/
 
 # Sitemap
-Sitemap: https://storyverse.co.in/sitemap.xml
+Sitemap: https://www.storyverse.co.in/sitemap.xml

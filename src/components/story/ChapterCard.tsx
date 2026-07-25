@@ -34,9 +34,13 @@ interface ChapterCardProps {
   editorState: EditorState;
   isActiveEditor: boolean;
   isOnline?: boolean;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
   onChapterTitleChange: (chapterId: string, title: string) => void;
   onDeleteChapter: (chapterId: string) => void;
   onToggleExpanded: (chapterId: string) => void;
+  onMoveUp?: (chapterId: string) => void;
+  onMoveDown?: (chapterId: string) => void;
   onAddCharacter: (chapterId: string, characterId: string) => void;
   onRemoveCharacter: (chapterId: string, characterId: string) => void;
   onAddLocation: (chapterId: string, locationId: string) => void;
@@ -60,9 +64,13 @@ export default function ChapterCard({
   editorState,
   isActiveEditor,
   isOnline = true,
+  canMoveUp = false,
+  canMoveDown = false,
   onChapterTitleChange,
   onDeleteChapter,
   onToggleExpanded,
+  onMoveUp,
+  onMoveDown,
   onAddCharacter,
   onRemoveCharacter,
   onAddLocation,
@@ -97,8 +105,67 @@ export default function ChapterCard({
     }
   };
 
+  // Render collapsed strip view when not expanded
+  if (!isExpanded) {
+    return (
+      <article 
+        className={`${styles.chapterCard} ${styles.collapsed}`}
+        onClick={() => onToggleExpanded(chapterId)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onToggleExpanded(chapterId);
+          }
+        }}
+      >
+        {/* Collapsed Header Strip */}
+        <header className={styles.collapsedHeader}>
+          <div className={styles.titleWrapper}>
+            <svg 
+              width="20" 
+              height="20"
+              viewBox="0 0 24 24" 
+              fill="none"
+              className={styles.expandIcon}
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <h4 className={styles.collapsedTitle}>
+              <span className={styles.chapterNumber}>Chapter {chapterNumber}</span>
+              <span className={styles.chapterName}>
+                {chapterTitle ? ' · ' + chapterTitle : ' · [Untitled]'}
+              </span>
+            </h4>
+          </div>
+          {/* Quick actions visible on collapsed state */}
+          <div className={styles.quickActions} onClick={(e) => e.stopPropagation()}>
+            <button
+              className={styles.deleteButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDeleteChapter(chapterId);
+              }}
+              aria-label="Delete chapter"
+              title="Delete chapter"
+            >
+              <img src={deleteIcon} alt="Delete" width="16" height="16" />
+            </button>
+          </div>
+        </header>
+      </article>
+    );
+  }
+
+  // Render expanded card view
   return (
-    <article className={styles.chapterCard}>
+    <article className={`${styles.chapterCard} ${styles.expanded}`}>
       {/* Chapter Header */}
       <header className={styles.chapterHeader}>
         <h4 className={styles.chapterTitle}>
@@ -121,13 +188,74 @@ export default function ChapterCard({
             </span>
           )}
         </h4>
-        <button
-          className={styles.deleteButton}
-          onClick={() => onDeleteChapter(chapterId)}
-          aria-label="Delete chapter"
-        >
-          <img src={deleteIcon} alt="Delete" width="16" height="16" />
-        </button>
+        
+        {/* Right-aligned controls */}
+        <div className={styles.controlsGroup}>
+          {/* Collapse Button - Primary action */}
+          <button
+            className={styles.collapseButtonProminent}
+            onClick={() => onToggleExpanded(chapterId)}
+            aria-label="Collapse chapter"
+            title="Collapse chapter"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M7 9L12 15L18 9"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          {/* Move Up Button */}
+          <button
+            className={styles.moveButton}
+            onClick={() => onMoveUp?.(chapterId)}
+            disabled={!canMoveUp}
+            aria-label="Move chapter up"
+            title="Move chapter up"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M7 14L12 9L17 14"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          {/* Move Down Button */}
+          <button
+            className={styles.moveButton}
+            onClick={() => onMoveDown?.(chapterId)}
+            disabled={!canMoveDown}
+            aria-label="Move chapter down"
+            title="Move chapter down"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M7 10L12 15L17 10"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          {/* Delete Button */}
+          <button
+            className={styles.deleteButton}
+            onClick={() => onDeleteChapter(chapterId)}
+            aria-label="Delete chapter"
+          >
+            <img src={deleteIcon} alt="Delete" width="16" height="16" />
+          </button>
+        </div>
       </header>
 
       {/* Chapter Characters */}
@@ -153,33 +281,9 @@ export default function ChapterCard({
         />
       </div>
 
-      {/* Chapter Text Editor - Always visible, limited to 5 lines when collapsed */}
+      {/* Chapter Text Editor - Always visible for expanded state */}
       <div className={styles.chapterSection}>
         <div className={styles.textEditorHeader}>
-          <button 
-            className={`${styles.expandButton} ${hasTextOverflow ? styles.hasContent : styles.noContent}`}
-            onClick={() => onToggleExpanded(chapterId)}
-            aria-label={isExpanded ? 'Collapse chapter' : 'Expand chapter'}
-          >
-            <svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none"
-              className={isExpanded ? styles.chevronUp : styles.chevronDown}
-            >
-              <path
-                d="M6 9L12 15L18 9"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className={styles.expandLabel}>
-              {isExpanded ? 'Collapse chapter' : 'Expand chapter'}
-            </span>
-          </button>
         </div>
         <ChapterTextEditor
           chapterId={chapterId}

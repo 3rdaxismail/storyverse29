@@ -34,7 +34,7 @@ export function useWritingSession({
 }: UseWritingSessionOptions): UseWritingSessionReturn {
   const [content, setContent] = useState('');
   const [isActive, setIsActive] = useState(false);
-  const debounceTimeoutRef = useRef<number | null>(null);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Subscribe to engine updates
   useEffect(() => {

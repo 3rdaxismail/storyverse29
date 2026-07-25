@@ -127,8 +127,8 @@ class WritingSessionEngine {
   private poemCoverImageUrl: string;
   
   // Common autosave and subscription infrastructure
-  private textAutosaveTimeouts: Map<string, number>;
-  private metaAutosaveTimeout: number | null;
+  private textAutosaveTimeouts: Map<string, ReturnType<typeof setTimeout>>;
+  private metaAutosaveTimeout: ReturnType<typeof setTimeout> | null;
   private listeners: Set<() => void>;
 
   constructor() {
@@ -974,6 +974,44 @@ class WritingSessionEngine {
     this.notifyListeners();
   }
 
+  /**
+   * Update chapter's actId and chapterOrder (called after reordering)
+   * This syncs the WritingSessionEngine cache with the Firestore updates
+   */
+  updateChapterActAndOrder(chapterId: string, newActId: string, newOrder: number): void {
+    const chapter = this.chapters.get(chapterId);
+    if (chapter) {
+      chapter.actId = newActId;
+      chapter.chapterOrder = newOrder;
+      chapter.lastEditedAt = Date.now();
+      this.saveActsAndChapters().catch(err => console.error('Failed to sync chapter order:', err));
+      this.notifyListeners();
+    }
+  }
+
+  /**
+   * Batch update chapter orders (called after reordering to sync all affected chapters)
+   * Updates: Array of [chapterId, newActId, newOrder]
+   */
+  batchUpdateChapterOrders(updates: Array<[string, string, number]>): void {
+    let hasChanges = false;
+    
+    updates.forEach(([chapterId, newActId, newOrder]) => {
+      const chapter = this.chapters.get(chapterId);
+      if (chapter && (chapter.actId !== newActId || chapter.chapterOrder !== newOrder)) {
+        chapter.actId = newActId;
+        chapter.chapterOrder = newOrder;
+        chapter.lastEditedAt = Date.now();
+        hasChanges = true;
+      }
+    });
+    
+    if (hasChanges) {
+      this.saveActsAndChapters().catch(err => console.error('Failed to sync chapter orders:', err));
+      this.notifyListeners();
+    }
+  }
+
   // ============================================================
   // ACTIVE EDITOR TRACKING
   // ============================================================
@@ -1236,12 +1274,19 @@ class WritingSessionEngine {
         console.log('[SAVE POEM META] ✅ New poem created successfully');
       }
 
-      // RECORD WRITING ACTIVITY for poem
-      // user is already declared earlier in this function
-      if (user) {
-        await recordWritingActivity(user.uid, wordCount, this.poemId);
-        console.log('[SAVE POEM META] 📊 Activity recorded:', wordCount, 'words from poem', this.poemId);
-      }
+        // RECORD WRITING ACTIVITY for poem
+        // user is already declared earlier in this function
+        if (user) {
+          console.log('[SAVE POEM META] 📊 About to record activity - uid:', user.uid, 'wordCount:', wordCount, 'poemId:', this.poemId);
+          try {
+            await recordWritingActivity(user.uid, wordCount, this.poemId);
+            console.log('[SAVE POEM META] ✅ Activity recorded successfully:', wordCount, 'words from poem', this.poemId);
+          } catch (activityError) {
+            console.error('[SAVE POEM META] ⚠️ Activity recording failed (non-critical):', activityError);
+          }
+        } else {
+          console.warn('[SAVE POEM META] ⚠️ Cannot record activity - user is null');
+        }
     } catch (error) {
       console.error('[SAVE POEM META] ❌ Save failed:', error);
     }
@@ -1320,8 +1365,15 @@ class WritingSessionEngine {
           this.chapterContents.forEach(ch => {
             totalWords += ch.wordCount || 0;
           });
-          await recordWritingActivity(user.uid, totalWords, this.storyId);
-          console.log('[SAVE CHAPTER CONTENT] 📊 Activity recorded:', totalWords, 'words from', this.storyId);
+          console.log('[SAVE CHAPTER CONTENT] 📊 About to record activity - uid:', user.uid, 'totalWords:', totalWords, 'storyId:', this.storyId);
+          try {
+            await recordWritingActivity(user.uid, totalWords, this.storyId);
+            console.log('[SAVE CHAPTER CONTENT] ✅ Activity recorded successfully:', totalWords, 'words from', this.storyId);
+          } catch (activityError) {
+            console.error('[SAVE CHAPTER CONTENT] ⚠️ Activity recording failed (non-critical):', activityError);
+          }
+        } else {
+          console.warn('[SAVE CHAPTER CONTENT] ⚠️ Cannot record activity - user is null');
         }
       } else {
         console.warn('[SAVE CHAPTER CONTENT] ⚠️ Chapter content not found:', chapterId);
@@ -1483,7 +1535,7 @@ class WritingSessionEngine {
       clearTimeout(this.metaAutosaveTimeout);
     }
     
-    this.metaAutosaveTimeout = window.setTimeout(async () => {
+    this.metaAutosaveTimeout = setTimeout(async () => {
       await this.savePoemMeta();
       this.metaAutosaveTimeout = null;
     }, AUTOSAVE_DELAY_META);

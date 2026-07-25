@@ -1,0 +1,78 @@
+/**
+ * DashboardBackground Styles
+ * 
+ * Cinematic crossfading background layer
+ * Sits behind dashboard content
+ * Smooth opacity transitions every 8 seconds
+ */
+
+.container {
+  position: fixed;
+  inset: 60px 0 0 0;
+  z-index: 0;
+  background: transparent;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: opacity;
+  margin: 0;
+  padding: 0;
+
+  /* Set to 40% opacity as requested */
+  opacity: 0.4;
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  /* Smooth crossfade transition - synced with HeroTitles (5 second interval) */
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+
+  /* Disable interactions */
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.image.next {
+  opacity: 0;
+}
+
+/* Ensure images are decoded asynchronously and don't block rendering */
+@supports (content-visibility: auto) {
+  .image {
+    content-visibility: auto;
+  }
+}
+
+/* Mobile optimization - reduce memory usage on smaller devices */
+@media (max-width: 768px) {
+  .container {
+    /* Lower quality on mobile to reduce bandwidth */
+    opacity: 0.8;
+  }
+}
+
+/* Reduce background intensity based on prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .container.visible {
+    opacity: 0.5; /* Dim the background more for reduced motion preference */
+  }
+
+  .image {
+    transition: opacity 0.3s linear; /* Faster, linear transition */
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  .container {
+    background: #1a1d20; /* Darker fallback */
+  }
+}

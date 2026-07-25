@@ -50,9 +50,13 @@ interface ActSectionProps {
   onChapterTitleChange: (chapterId: string, title: string) => void;
   onDeleteChapter: (chapterId: string) => void;
   onToggleChapterExpanded: (chapterId: string) => void;
+  onMoveChapterUp?: (chapterId: string, currentActId: string) => void;
+  onMoveChapterDown?: (chapterId: string, currentActId: string) => void;
   onChapterContentChange: (chapterId: string, content: string) => void;
   onChapterEditorFocus: (chapterId: string) => void;
   onChapterEditorBlur: (chapterId: string) => void;
+  canChapterMoveUp?: (chapterId: string) => boolean;
+  canChapterMoveDown?: (chapterId: string) => boolean;
 }
 
 export default function ActSection({
@@ -76,9 +80,13 @@ export default function ActSection({
   onChapterTitleChange,
   onDeleteChapter,
   onToggleChapterExpanded,
+  onMoveChapterUp,
+  onMoveChapterDown,
   onChapterContentChange,
   onChapterEditorFocus,
-  onChapterEditorBlur
+  onChapterEditorBlur,
+  canChapterMoveUp,
+  canChapterMoveDown
 }: ActSectionProps) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [localTitle, setLocalTitle] = useState(actTitle);
@@ -157,9 +165,13 @@ export default function ActSection({
             editorState={chapter.state}
             isActiveEditor={activeEditorId === chapter.id}
             isOnline={isOnline}
+            canMoveUp={canChapterMoveUp ? canChapterMoveUp(chapter.id) : false}
+            canMoveDown={canChapterMoveDown ? canChapterMoveDown(chapter.id) : false}
             onChapterTitleChange={onChapterTitleChange}
             onDeleteChapter={onDeleteChapter}
             onToggleExpanded={onToggleChapterExpanded}
+            onMoveUp={() => onMoveChapterUp?.(chapter.id, actId)}
+            onMoveDown={() => onMoveChapterDown?.(chapter.id, actId)}
             onAddCharacter={onAddCharacter}
             onRemoveCharacter={onRemoveCharacter}
             onAddLocation={onAddLocation}

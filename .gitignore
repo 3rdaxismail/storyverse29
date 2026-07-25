@@ -1,37 +1,22 @@
+# Local environment variables
+.env
+.env.*
+!.env.example
+
 # Logs
-logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependencies and build outputs
+node_modules/
+dist/
+dev-dist/
 
-# Environment variables (DO NOT COMMIT)
-.env
-.env.local
-.env.production
-.env.development
+# Local editor files
+.vscode/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Figma and Design Tokens (DO NOT COMMIT)
-mcp/extract-design-tokens.ps1
-src/mcp.json
-*figma-token*
-*design-token*
-FIGMA-FIDELITY-VERIFICATION.md
+# TypeScript/Vite generated artifacts
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts

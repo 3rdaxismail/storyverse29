@@ -66,7 +66,19 @@ export default function WritingActivityHeatmap() {
     return activeDays.has(dateKey);
   };
 
-  if (!user) return null;
+  // Always render - protected route ensures user exists
+  // But if not loaded yet, show placeholder to prevent blank screen
+  if (!user) {
+    return (
+      <div className={styles.heatmap}>
+        <div className={styles.headerRow}>
+          <h3 className={styles.title}>Recent writing activity</h3>
+          <span className={styles.menuDots}>•••</span>
+        </div>
+        <p className={styles.summaryText}>Loading activity...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.heatmap}>

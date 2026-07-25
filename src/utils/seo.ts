@@ -97,7 +97,7 @@ export function sanitizeForMeta(text: string): string {
  * @returns Full canonical URL
  */
 export function generateCanonicalUrl(path: string): string {
-  const baseUrl = import.meta.env.VITE_APP_URL || 'https://storyverse.co.in';
+  const baseUrl = import.meta.env.VITE_APP_URL || 'https://www.storyverse.co.in';
   return `${baseUrl}${path.startsWith('/') ? path : '/' + path}`;
 }
 

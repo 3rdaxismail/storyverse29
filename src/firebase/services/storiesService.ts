@@ -51,6 +51,7 @@ export interface Chapter {
   expanded: boolean;
   chapterOrder: number;
   lastEditedAt: number;
+  tension?: number; // NEW: 0-100 for timeline visualization
 }
 
 export interface ChapterContent {
@@ -384,9 +385,53 @@ export async function loadActsAndChapters(storyId: string): Promise<{ acts: Act[
   };
 }
 
+/**
+ * Update chapter tension for timeline visualization
+ * @param storyId - Story document ID
+ * @param actId - Act ID containing the chapter
+ * @param chapterId - Chapter ID to update
+ * @param tension - Tension value (0-100)
+ */
+export async function updateChapterTension(
+  storyId: string,
+  actId: string,
+  chapterId: string,
+  tension: number
+): Promise<void> {
+  const user = auth.currentUser;
+  if (!user) throw new Error('User not authenticated');
+
+  // Validate ownership
+  const story = await getStory(storyId);
+  if (!story || story.uid !== user.uid) {
+    throw new Error('Unauthorized: You do not own this story');
+  }
+
+  // Clamp tension 0-100
+  const clampedTension = Math.max(0, Math.min(100, tension));
+
+  // Update chapters array in story document
+  const storyRef = doc(db, 'stories', storyId);
+  const storyDoc = await getDoc(storyRef);
+
+  if (!storyDoc.exists()) {
+    throw new Error('Story not found');
+  }
+
+  const chapters = (storyDoc.data().chapters || []) as Chapter[];
+  const updatedChapters = chapters.map((ch) =>
+    ch.chapterId === chapterId ? { ...ch, tension: clampedTension } : ch
+  );
+
+  await updateDoc(storyRef, {
+    chapters: updatedChapters,
+    updatedAt: serverTimestamp(),
+  });
+}
+
 // ============================================================
 // CHAPTER CONTENT - Each chapter's text stored separately
-// ============================================================
+// =============================================================
 
 /**
  * Save chapter content

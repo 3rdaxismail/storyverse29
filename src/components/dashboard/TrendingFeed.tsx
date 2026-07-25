@@ -103,8 +103,33 @@ export default function TrendingFeed() {
     return () => clearInterval(rotationInterval);
   }, [items.length]);
 
-  if (loading || items.length === 0) {
-    return null;
+  if (loading) {
+    // Show loading state instead of nothing
+    return (
+      <div 
+        className={styles.trendingRow}
+        role="status"
+        aria-label="Loading trending content"
+      >
+        <img src={trendingIcon} alt="" className={styles.icon} />
+        <span className={styles.content}>Loading trending...</span>
+      </div>
+    );
+  }
+
+  if (items.length === 0) {
+    // Show empty state instead of nothing
+    return (
+      <div 
+        className={styles.trendingRow}
+        onClick={() => navigate('/trending')}
+        role="button"
+        tabIndex={0}
+      >
+        <img src={trendingIcon} alt="" className={styles.icon} />
+        <span className={styles.content}>Check out trending stories</span>
+      </div>
+    );
   }
 
   // Get the SINGLE current item to display

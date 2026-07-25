@@ -33,7 +33,7 @@ class DeviceSessionManager {
   private userId: string | null = null;
   private unsubscribe: Unsubscribe | null = null;
   private sessionStatusCallback: ((status: SessionStatus, conflict?: SessionConflict) => void) | null = null;
-  private heartbeatInterval: number | null = null;
+  private heartbeatInterval: ReturnType<typeof setInterval> | null = null;
 
   /**
    * Generate a unique session ID for this device
